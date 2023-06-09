@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -102,6 +105,37 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        }
+      }
+    },
+    "hijri-gregorian-datepicker": {
+      "projectType": "library",
+      "root": "projects/hijri-gregorian-datepicker",
+      "sourceRoot": "projects/hijri-gregorian-datepicker/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/hijri-gregorian-datepicker/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/hijri-gregorian-datepicker/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/hijri-gregorian-datepicker/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/hijri-gregorian-datepicker/src/test.ts",
+            "tsConfig": "projects/hijri-gregorian-datepicker/tsconfig.spec.json",
+            "karmaConfig": "projects/hijri-gregorian-datepicker/karma.conf.js"
           }
         }
       }

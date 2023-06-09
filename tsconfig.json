@@ -5,8 +5,14 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitReturns": true,
+    "strict": false,
+    "noImplicitReturns": false,
+    "paths": {
+      "hijri-gregorian-datepicker": [
+        "dist/hijri-gregorian-datepicker/hijri-gregorian-datepicker",
+        "dist/hijri-gregorian-datepicker"
+      ]
+    },
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,

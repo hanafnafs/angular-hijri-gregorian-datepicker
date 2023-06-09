@@ -1,0 +1,43 @@
+{
+  "name": "angular-hijri-gregorian-datepicker",
+  "version": "0.0.1",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^12.0.5",
+    "@angular/core": "^12.0.5"
+  },
+  "dependencies": {
+    "tslib": "^2.1.0",
+    "moment-hijri": "^2.1.2"
+  },
+  "author": {
+    "name": "Hanafnafs",
+    "email": "hanafnafs@gmail.com",
+    "url": "https://github.com/hanafnafs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanafnafs/angular-hijri-gregorian-datepicker"
+  },
+  "keywords": [
+    "ng",
+    "angular",
+    "calendar",
+    "hijri",
+    "gregorian",
+    "hijri gregorian calendar",
+    "angular calendar",
+    "ionic hijri gregorian calendar",
+    "gregorian hijri calendar",
+    "moment hijri",
+    "angular gregorian calendar",
+    "covert hijri gregorian",
+    "angular datepicker",
+    "ionic hijri datepicker",
+    "gregorian datepicker",
+    "angular datepicker"
+  ]
+}
