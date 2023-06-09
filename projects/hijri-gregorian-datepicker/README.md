@@ -62,7 +62,7 @@ Other browsers:  <b>Edge v.41 - 44</b> (without code hidden feature)
 Import `HijriGregorianDatepickerModule` in your app module or page module:
 
 ```ts
-import { HijriGregCalendarModule } from 'angular-hijri-gregorian-datepicker';
+import { HijriGregorianDatepickerModule } from 'angular-hijri-gregorian-datepicker';
 
 @NgModule({
   imports: [
