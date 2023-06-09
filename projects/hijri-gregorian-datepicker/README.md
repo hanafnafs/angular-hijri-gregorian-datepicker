@@ -52,7 +52,7 @@ Other browsers:  <b>Edge v.41 - 44</b> (without code hidden feature)
 
 ## Installation
 
-    $ npm install --save hijri-greg-calendar
+    $ npm install angular-hijri-gregorian-datepicker
 
 
 <br />
