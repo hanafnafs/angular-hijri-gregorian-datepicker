@@ -1,212 +1,210 @@
-*{
-    font-family: "system-ui";
+* {
+  font-family: "system-ui";
+}
+
+.day {
+  display: inline-flex;
+  width: 13%;
+  height: 6vh;
+  color: #1A4263;
+  background: #F3F6FB;
+  justify-content: center;
+  align-items: center;
+}
+
+.week-day {
+  display: inline-block;
+  width: 13%;
+  text-align: center;
+  background: #F3F6FB;
+  color: #1AAEC8;
+  padding: 10px 0px 10px 0px;
+}
+
+.muted {
+  color: silver;
+}
+
+.container {
+  background: #F3F6FB;
+  border-radius: 4px;
+  margin: 10px auto auto auto;
+  display: block;
+}
+
+.calendar-container {
+  width: 87.5%;
+  margin: auto;
+  display: block;
+  background: white;
+  border-radius: 20px;
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+
+.week {
+  text-align: center;
+}
+
+.no-gutters {
+  text-align: center;
+  margin-top: 5px;
+  // margin-bottom: 5px;
+}
+
+
+
+#greg-day {
+  position: relative;
+
+  span {
+    font-size: 14px;
   }
-  .day {
-    display: inline-flex;
-    width: 13%;
-    height: 6vh;
-    color: #1A4263;
-    background: #F3F6FB;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .week-day {
-    display: inline-block;
-    width: 13%;
-    text-align: center;
-    background: #F3F6FB;
-    color: #1AAEC8;
-    padding: 10px 0px 10px 0px;
-  }
-  
-  .muted {
-    color: silver;
-  }
-  
-  .container {
+}
+
+#hijri-day {
+  font-size: 11px;
+}
+
+#hijri-month {
+  margin-right: 3px;
+}
+
+#hijri-cont {
+  font-size: 11px;
+  margin-right: 4px;
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+.period-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+
+  .selectItem {
+    width: 42.5%;
     background: #F3F6FB;
     border-radius: 4px;
-    margin: 10px auto auto auto;
-    display: block;
-  }
-  
-  .calendar-container {
-    width: 87.5%;
-    margin: auto;
-    display: block;
-    background: white;
-    border-radius: 20px;
-    padding-bottom: 10px;
-    padding-top: 5px;
-  }
-  
-  .week {
-    text-align: center;
-  }
-  
-  .no-gutters {
-    text-align: center;
-    margin-top: 5px;
-    // margin-bottom: 5px;
-  }
-  
-  
-  
-  #greg-day {
-    position: relative;
-  
-    span {
-      font-size: 14px;
-    }
-  }
-  
-  #hijri-day {
-    font-size: 11px;
-  }
-  
-  #hijri-month {
-    margin-right: 3px;
-  }
-  
-  #hijri-cont {
-    font-size: 11px;
-    margin-right: 4px;
-    display: flex;
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-  }
-  
-  .period-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-  
-    .selectItem {
-      width: 42.5%;
-      background: #F3F6FB;
-      border-radius: 4px;
-      height: 50px;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  
-    label {
-      margin-right: 10px;
-    }
-  
-    select {
-      width: 100%;
-      height: 50px;
-      border: none;
-      font-size: 16px;
-      display: block;
-      margin: auto;
-      color: #1A4263;
-      background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 140 140' width='15' height='15' xmlns='http://www.w3.org/2000/svg'><g><path d='m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z' fill='black'/></g></svg>") no-repeat 95% 50%;
-      -moz-appearance: none;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-  
-    .icon-ltr {
-      background-position: right;
-    }
-  
-    .icon-rtl {
-      background-position: left;
-    }
-  
-    select:focus {
-      outline: none;
-    }
-  
-  }
-  
-  .todayDate {
-    border: 1px solid #1AAEC8;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .selectedDate {
-    background: #1AAEC8 !important;
-    padding: 10px;
-    border-radius: 5px;
-    color: white !important;
-  }
-  
-  .confirm-btn {
-    background: #1AAEC8;
-    border-radius: 10px;
     height: 50px;
-    color: white;
-    // width: 95%;
-    width: 100%;
-    border: none;
-    font-size: 17px;
-    margin: 5vh auto 3vh auto;
-    box-shadow: none !important;
-  }
-  
-  
-  
-  .hijri-toggle {
-    margin-top: 15px;
-  
-    label {
-      text-align: right;
-      font-size: 19px;
-      color: #1A4263;
-    }
-  
-    span {
-      color: #1A4263
-    }
-  }
-  
-  .today-date-section {
-    background: #F3F6FB;
-    border-radius: 4px;
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding-left: 10px;
     padding-right: 10px;
-  
-    .info {
-      display: flex;
-      align-items: center;
-  
-      p {
-        color: #1A4263;
-        font-size: 17px;
-      }
-    }
-  
-    .data {
-      background: white;
-      border-radius: 8px;
-      margin-left: 10px;
-  
-      p {
-        font-size: 14px;
-        margin: 5px;
-        margin: 5px 10px 5px 10px;
-        color: #1AAEC8;
-      }
-    }
   }
-  
-  .periodForm {
+
+  label {
+    margin-right: 10px;
+  }
+
+  select {
     width: 100%;
+    height: 50px;
+    border: none;
+    font-size: 16px;
+    display: block;
+    margin: auto;
+    color: #1A4263;
+    background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 140 140' width='15' height='15' xmlns='http://www.w3.org/2000/svg'><g><path d='m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z' fill='black'/></g></svg>") no-repeat 95% 50%;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .icon-ltr {
+    background-position: right;
+  }
+
+  .icon-rtl {
+    background-position: left;
+  }
+
+  select:focus {
+    outline: none;
+  }
+
+}
+
+.todayDate {
+  border: 1px solid #1AAEC8;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.selectedDate {
+  background: #1AAEC8 !important;
+  padding: 10px;
+  border-radius: 5px;
+  color: white !important;
+}
+
+.confirm-btn {
+  background: #1AAEC8;
+  border-radius: 10px;
+  height: 50px;
+  color: white;
+  // width: 95%;
+  width: 100%;
+  border: none;
+  font-size: 17px;
+  margin: 5vh auto 3vh auto;
+  box-shadow: none !important;
+}
+
+.hijri-toggle {
+  margin-top: 15px;
+
+  label {
+    text-align: right;
+    font-size: 19px;
+    color: #1A4263;
+  }
+
+  span {
+    color: #1A4263
+  }
+}
+
+.today-date-section {
+  background: #F3F6FB;
+  border-radius: 4px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  .info {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+
+    p {
+      color: #1A4263;
+      font-size: 17px;
+    }
   }
-  
-  .order {
-    order: 1
+
+  .data {
+    background: white;
+    border-radius: 8px;
+    margin-left: 10px;
+
+    p {
+      font-size: 14px;
+      margin: 5px;
+      margin: 5px 10px 5px 10px;
+      color: #1AAEC8;
+    }
   }
-  
+}
+
+.periodForm {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.order {
+  order: 1
+}

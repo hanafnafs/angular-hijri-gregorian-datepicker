@@ -1,18 +1,30 @@
-<hijri-gregorian-datepicker
-  [canChangeMode]="true"
-  [todaysDateSection]="true"
-  [futureValidation]="true"
-  [disableYearPicker]="false"
-  [disableMonthPicker]="false"
-  [disableDayPicker]="false"
-  [multiple]="true"
-  [mode]="'hijri'"
-  [dir]="'rtl'"
-  [locale]="'ar'"
-  [pastYearsLimit]="20"
-  [futureYearsLimit]="10"
-  (onSubmit)="onSubmitTest($event)"
-  (onChange)="onChangeTest($event)"
-  (onMonthChange)="onMonthChangeTest($event)"
-  (onYearChange)="onYearChangeTest($event)"
-></hijri-gregorian-datepicker>
+<div class="app-container">
+  <button
+    type="button"
+    class="open-datepicker"
+    (click)="onOpenCalendarClicked()"
+  >
+    Open Calendar
+  </button>
+  <div class="calendar-container">
+    <hijri-gregorian-datepicker
+      [hidden]="toggle"
+      [canChangeMode]="true"
+      [todaysDateSection]="true"
+      [futureValidation]="true"
+      [disableYearPicker]="false"
+      [disableMonthPicker]="false"
+      [disableDayPicker]="false"
+      [multiple]="false"
+      [mode]="'hijri'"
+      [dir]="'rtl'"
+      [locale]="'ar'"
+      [pastYearsLimit]="20"
+      [futureYearsLimit]="10"
+      (onSubmit)="onSubmitTest($event)"
+      (onChange)="onChangeTest($event)"
+      (onMonthChange)="onMonthChangeTest($event)"
+      (onYearChange)="onYearChangeTest($event)"
+    ></hijri-gregorian-datepicker>
+  </div>
+</div>

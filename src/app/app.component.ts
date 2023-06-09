@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  toggle: boolean = false;
   onSubmitTest(ev) {
     console.log('App component ', ev);
   }
@@ -20,5 +21,9 @@ export class AppComponent {
 
   onYearChangeTest(ev) {
     console.log('App component ', ev);
+  }
+
+  onOpenCalendarClicked() {
+    this.toggle = !this.toggle;
   }
 }

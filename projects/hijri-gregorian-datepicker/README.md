@@ -26,7 +26,7 @@ Ionic 3, 4, 5 + is supported, can be used in iOS and Android.<br />
 
 ## Examples/Demo
 
-<!-- Online demo can be found [here](https://eslamelmadny.github.io/HijriGregorianDatepicker/)  -->
+Online demo can be found [here](https://hanafnafs.github.io/angular-hijri-gregorian-datepicker/) 
 
 <br />
 
@@ -80,7 +80,7 @@ import { HijriGregorianDatepickerModule } from 'angular-hijri-gregorian-datepick
   [disableYearPicker]="false"
   [disableMonthPicker]="false"
   [disableDayPicker]="false"
-  [multiple]="true"
+  [multiple]="false"
   [mode]="'hijri'"
   [dir]="'rtl'"
   [locale]="'ar'"
