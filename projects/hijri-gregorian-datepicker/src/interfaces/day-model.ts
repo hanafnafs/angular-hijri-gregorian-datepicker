@@ -7,4 +7,5 @@ export interface Day {
   isMonth?: boolean;
   hijri?: string;
   gregorian?: string;
+  selected?: boolean;
 }

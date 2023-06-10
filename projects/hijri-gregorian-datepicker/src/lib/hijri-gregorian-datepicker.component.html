@@ -1,147 +1,151 @@
 <div class="calendar-container">
-    <div class="hijri-toggle" [dir]="dir" *ngIf="canChangeMode" (click)="changeCalendarMode()">
-      <label class="switch">
-        <input
-          type="checkbox"
-          [disabled]="!canChangeMode"
-          justify="end"
-          [(ngModel)]="toggle"
-        />
-        <!-- <span class="slider round"></span> -->
-      </label>
-      <span> {{hijriDateText}} </span>
+  <div
+    class="hijri-toggle"
+    [dir]="dir"
+    *ngIf="canChangeMode"
+    (click)="changeCalendarMode()"
+  >
+    <label class="switch">
+      <input
+        type="checkbox"
+        [disabled]="!canChangeMode"
+        justify="end"
+        [(ngModel)]="toggle"
+      />
+    </label>
+    <span> {{ hijriDateText }} </span>
+  </div>
+
+  <div class="today-date-section" *ngIf="todaysDateSection">
+    <div
+      class="info"
+      [ngClass]="{
+        order: dir == 'rtl'
+      }"
+    >
+      <p>{{ todaysDateText }}</p>
     </div>
-  
-    <div class="today-date-section" *ngIf="todaysDateSection">
+
+    <div class="data" [dir]="dir">
+      <p *ngIf="mode == 'hijri'">
+        {{ currentDate.split("/")[2] }}
+
+        {{
+          locale == "ar"
+            ? hijriMonths[this.parseArabic(currentDate.split("/")[1]) - 1]
+                ?.nameAr
+            : hijriMonths[this.parseArabic(currentDate.split("/")[1]) - 1]
+                ?.nameEn
+        }}
+
+        {{ currentDate.split("/")[0] }}
+      </p>
+
+      <p *ngIf="mode == 'greg'">{{ currentDate }}</p>
+    </div>
+  </div>
+
+  <div class="period-container">
+    <form [formGroup]="periodForm" class="periodForm">
       <div
-        class="info"
+        class="selectItem"
+        [ngClass]="{
+          order: dir == 'ltr'
+        }"
+      >
+        <label *ngIf="!selectedYearAndMonth['year'].value">السنة</label>
+
+        <select
+          formControlName="years"
+          class="{{ 'icon-' + dir }}"
+          placeholder="السنة"
+          (change)="onPeriodChange('year')"
+          [dir]="dir"
+        >
+          <option *ngFor="let year of years" [ngValue]="year">
+            {{ year?.text }}
+          </option>
+        </select>
+      </div>
+
+      <div
+        class="selectItem"
         [ngClass]="{
           order: dir == 'rtl'
         }"
       >
-        <p>{{todaysDateText}}</p>
+        <label *ngIf="!selectedYearAndMonth['month'].value">الشهر</label>
+
+        <select
+          class="{{ 'icon-' + dir }}"
+          formControlName="months"
+          placeholder="الشهر"
+          (change)="onPeriodChange('month')"
+          [dir]="dir"
+        >
+          <option *ngFor="let month of months" [ngValue]="month">
+            {{ locale == "ar" ? month?.nameAr : month?.nameEn }}
+          </option>
+        </select>
       </div>
-  
-      <div class="data">
-        <p *ngIf="mode == 'hijri'">
-          {{ currentDate.split("/")[2] }}
-  
-          {{
-            locale == "ar"
-              ? hijriMonths[
-                  this.getCorrespondingMonth(currentDate.split("/")[1]) - 1
-                ]?.nameAr
-              : hijriMonths[
-                  this.getCorrespondingMonth(currentDate.split("/")[1]) - 1
-                ]?.nameEn
-          }}
-  
-          {{ currentDate.split("/")[0] }}
-        </p>
-  
-        <p *ngIf="mode == 'greg'">{{ currentDate }}</p>
+    </form>
+  </div>
+
+  <div class="container">
+    <div class="no-gutters">
+      <div
+        class="week-day"
+        *ngFor="let date of locale == 'ar' ? weekdaysAr : weekdaysEn"
+      >
+        {{ date }}
       </div>
     </div>
-  
-    <div class="period-container">
-      <form [formGroup]="periodForm" class="periodForm">
+
+    <div class="cal-container" [dir]="dir">
+      <div class="week" *ngFor="let week of days">
         <div
-          class="selectItem"
-          [ngClass]="{
-            order: dir == 'ltr'
-          }"
+          class="day"
+          [class.muted]="
+            (!day.isMonth && mode == 'greg') ||
+            (mode == 'hijri' && hijriMonth != day.hijriMonth)
+          "
+          *ngFor="let day of week"
+          (click)="disableDayPicker == false ? onDayClicked(day) : ''"
         >
-          <label *ngIf="!selectedYearAndMonth['year'].value">السنة</label>
-  
-          <select
-            formControlName="years"
-            class="{{ 'icon-' + dir }}"
-            placeholder="السنة"
-            (change)="onPeriodChange('year', $event)"
-            [dir]="dir"
-          >
-            <option *ngFor="let year of years" [ngValue]="year">
-              {{ year?.text }}
-            </option>
-          </select>
-        </div>
-  
-        <div
-          class="selectItem"
-          [ngClass]="{
-            order: dir == 'rtl'
-          }"
-        >
-          <label *ngIf="!selectedYearAndMonth['month'].value">الشهر</label>
-  
-          <select
-            class="{{ 'icon-' + dir }}"
-            formControlName="months"
-            placeholder="الشهر"
-            (change)="onPeriodChange('month', $event)"
-            [dir]="dir"
-          >
-            <option *ngFor="let month of months" [ngValue]="month">
-              {{ locale == "ar" ? month?.nameAr : month?.nameEn }}
-            </option>
-          </select>
-        </div>
-      </form>
-    </div>
-  
-    <div class="container">
-      <div class="no-gutters">
-        <div
-          class="week-day"
-          *ngFor="let date of locale == 'ar' ? weekdaysAr : weekdaysEn"
-        >
-          {{ date }}
-        </div>
-      </div>
-  
-      <div class="cal-container" [dir]="dir">
-        <div class="week" *ngFor="let week of days">
           <div
-            class="day"
-            [class.muted]="
-              (!day.isMonth && mode == 'greg') ||
-              (mode == 'hijri' && hijriMonth != day.hijriMonth)
-            "
-            *ngFor="let day of week"
-            (click)="disableDayPicker == false ? onDayClicked(day) : ''"
+            id="greg-day"
+            [ngClass]="{
+              todayDate:
+                (todaysDate?.gregorian == day?.gregorian ||
+                  todaysDate?.hijri == day?.hijri) &&
+                !disableDayPicker,
+              selectedDate: day?.selected == true,
+              muted: checkFutureValidation(day)
+            }"
           >
-            <div
-              id="greg-day"
-              [ngClass]="{
-                todayDate:
-                  (todaysDate?.gregorian == day?.gregorian ||
-                    todaysDate?.hijri == day?.hijri) &&
-                  !disableDayPicker,
-                selectedDate: day?.selected == true,
-                muted: checkFutureValidation(day)
-              }"
-            >
-              <span *ngIf="mode == 'greg'">{{ day?.day | number }}</span>
-  
-              <span id="hijri-day" *ngIf="mode == 'hijri'">{{
-                day?.hijri?.split("/")[2] | number
-              }}</span>
-            </div>
+            <span *ngIf="mode == 'greg'">{{ day?.day | number }}</span>
+
+            <span id="hijri-day" *ngIf="mode == 'hijri'">{{
+              day?.hijri?.split("/")[2] | number
+            }}</span>
           </div>
         </div>
       </div>
     </div>
-  
-    <div>
-      <button
-        type="button"
-        class="confirm-btn"
-        [disabled]="!selectedDate"
-        (click)="onConfirmClicked()"
-        *ngIf="!disableDayPicker"
-      >
-        {{submitTextButton}}
-      </button>
-    </div>
   </div>
-  
+
+  <div>
+    <button
+      type="button"
+      class="confirm-btn"
+      [disabled]="
+        (!selectedDate && !multiple) ||
+        (!multipleSelectedDates.length && multiple)
+      "
+      (click)="onConfirmClicked()"
+      *ngIf="!disableDayPicker"
+    >
+      {{ submitTextButton }}
+    </button>
+  </div>
+</div>
