@@ -1,13 +1,13 @@
-<br />
+# Angular Hijri Gregorian Calendar(Datepicker)
+
+Angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 14+ projects.
 
 [![Build](https://img.shields.io/badge/build-passing-green.svg)](https://www.npmjs.com/package/hijri-greg-calendar)
 [![Dependencies](https://img.shields.io/badge/dependencies-uptodate-green.svg)](https://www.npmjs.com/package/hijri-greg-calendar)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://www.npmjs.com/package/hijri-greg-calendar)
 
-
-# Angular Hijri Gregorian Calendar(Datepicker)
 <br />
-<b> Robust</b> and <b>tested</b> code angular hijri/gregorian calendar component for Angular 7 - 12, 14+ projects.<br />
+<b> Robust</b> and <b>tested</b> code angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 14+ projects.<br />
 Ionic 3, 4, 5 + is supported, can be used in iOS and Android.<br />
 
 <b> Star it to inspire us to build the best component! </b>
