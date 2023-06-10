@@ -1,17 +1,15 @@
 <div class="calendar-container">
-    <div class="hijri-toggle" [dir]="dir" *ngIf="canChangeMode">
+    <div class="hijri-toggle" [dir]="dir" *ngIf="canChangeMode" (click)="changeCalendarMode()">
       <label class="switch">
         <input
           type="checkbox"
           [disabled]="!canChangeMode"
           justify="end"
           [(ngModel)]="toggle"
-          (change)="changeCalendarMode($event)"
         />
         <!-- <span class="slider round"></span> -->
       </label>
-      <span *ngIf="locale == 'ar'"> تاريخ هجري </span>
-      <span *ngIf="locale == 'en'"> Hijri Date </span>
+      <span> {{hijriDateText}} </span>
     </div>
   
     <div class="today-date-section" *ngIf="todaysDateSection">
@@ -21,8 +19,7 @@
           order: dir == 'rtl'
         }"
       >
-        <p *ngIf="locale == 'ar'">تاريخ اليوم</p>
-        <p *ngIf="locale == 'en'">Today's Date</p>
+        <p>{{todaysDateText}}</p>
       </div>
   
       <div class="data">
@@ -143,7 +140,7 @@
         (click)="onConfirmClicked()"
         *ngIf="!disableDayPicker"
       >
-        {{ locale == "ar" ? "تأكيد" : "Confirm" }}
+        {{submitTextButton}}
       </button>
     </div>
   </div>

@@ -22,10 +22,14 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   @Input() disableDayPicker: boolean = false;
   @Input() multiple: boolean = false;
   @Input() mode: string = 'greg';
-  @Input() dir: string;
-  @Input() locale: string;
+  @Input() dir: string = "ltr";
+  @Input() locale: string = "en";
+  @Input() submitTextButton: string = "Confirm";
+  @Input() todaysDateText: string = "Today's Date";
+  @Input() hijriDateText: string = "Hijri Date";
   @Input() pastYearsLimit: number = 90;
   @Input() futureYearsLimit: number = 0;
+
   //Outputs
   @Output() onSubmit = new EventEmitter<object>();
   @Output() onChange = new EventEmitter<object>();
@@ -330,8 +334,8 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   }
 
   getCorrespondingMonth(monthOrder) {
-    let res = this.parseArabic(monthOrder);
-    return parseInt(res);
+    return parseInt(this.parseArabic(monthOrder));
+    // return parseInt(res);
   }
 
   onPeriodChange(type, ev) {
@@ -403,6 +407,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   }
 
   changeCalendarMode(ev?) {
+    this.toggle = !this.toggle;
     momentJs.locale(this.locale);
     if (this.selectedDate) {
       this.dateBeforeToggle = this.selectedDate;

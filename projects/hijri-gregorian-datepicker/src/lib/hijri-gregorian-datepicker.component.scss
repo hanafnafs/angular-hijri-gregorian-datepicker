@@ -147,12 +147,13 @@
   width: 100%;
   border: none;
   font-size: 17px;
-  margin: 5vh auto 3vh auto;
+  margin: 3vh auto 3vh auto;
   box-shadow: none !important;
 }
 
 .hijri-toggle {
   margin-top: 15px;
+  width: fit-content;
 
   label {
     text-align: right;

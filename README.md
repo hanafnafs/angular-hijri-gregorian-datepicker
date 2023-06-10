@@ -1,8 +1,9 @@
+<br />
+
 [![Build](https://img.shields.io/badge/build-passing-green.svg)](https://www.npmjs.com/package/hijri-greg-calendar)
 [![Dependencies](https://img.shields.io/badge/dependencies-uptodate-green.svg)](https://www.npmjs.com/package/hijri-greg-calendar)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://www.npmjs.com/package/hijri-greg-calendar)
 
-<br />
 
 # Angular Hijri Gregorian Calendar(Datepicker)
 <br />
@@ -32,11 +33,18 @@ Online demo can be found [here](https://hanafnafs.github.io/angular-hijri-gregor
 
 ## Features
 
+* Can be used only as a calendar or a datepicker.
+* **RTL** and **LTR** support
 * Easy to switch between  **Gregorian** and **Hijri** calendars.
 * Ability to specify the default calendar type either **Gregorian** or **Hijri**.
 * Converting dates when changing type of calendar.
 * Ability to specify min and max value for **Gregorian** and **Hijri**.
-* Ability to make it required , readonly or disabled.
+* Ability to make it required or readonly.
+* Very easy to customize.
+* Can select **Multiple** dates.
+* **Event listeners** for all datepicker events.
+* Can customize future and past years number.
+* **Responsive** desing for web and mobile.
 
 <br />
 
@@ -83,7 +91,10 @@ import { HijriGregorianDatepickerModule } from 'angular-hijri-gregorian-datepick
   [multiple]="false"
   [mode]="'hijri'"
   [dir]="'rtl'"
-  [locale]="'ar'"
+  [locale]="'en'"
+  [submitTextButton]="'Confirm'"
+  [todaysDateText]="'Todays\'s Date'"
+  [hijriDateText]="'Hijri Date'"
   [pastYearsLimit]="20"
   [futureYearsLimit]="10"
   (onSubmit)="onSubmitTest($event)"
@@ -129,6 +140,9 @@ Inside your component.ts:
 | <b>`mode`</b> | string | `greg` | Calendar mode, either `hijri` or `greg` |
 | <b>`dir`</b> | string | `ltr` | Layout direction, either `ltr` or `rtl` |
 | <b>`locale`</b> | string | `en` | The language of the calendar layout, either `ar` or `en` |
+| <b>`submitTextButton`</b> | string | `Confirm` | Confirm button text value |
+| <b>`todaysDateText`</b> | string | `Todays\'s Date` | Today's date text in `todaysDateSection` |
+| <b>`hijriDateText`</b> | string | `Hijri Date` | Hijri date text(checkbox) |
 | <b>`pastYearsLimit`</b> | number | `90` | indicates for the past years number you want to allow user to select from |
 | <b>`futureYearsLimit`</b> | number | `0` | indicates for the future years number you want to allow user to select from |
 
