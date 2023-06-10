@@ -2,9 +2,9 @@
 
 Angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 14+ projects.
 
-[![Build](https://img.shields.io/badge/build-passing-green.svg)](https://www.npmjs.com/package/hijri-greg-calendar)
-[![Dependencies](https://img.shields.io/badge/dependencies-uptodate-green.svg)](https://www.npmjs.com/package/hijri-greg-calendar)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://www.npmjs.com/package/hijri-greg-calendar)
+[![Build](https://img.shields.io/badge/build-passing-green.svg)](https://www.npmjs.com/package/angular-hijri-gregorian-datepicker)
+[![Dependencies](https://img.shields.io/badge/dependencies-uptodate-green.svg)](https://www.npmjs.com/package/angular-hijri-gregorian-datepicker)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://www.npmjs.com/package/angular-hijri-gregorian-datepicker)
 
 <br />
 <b> Robust</b> and <b>tested</b> code angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 14+ projects.<br />

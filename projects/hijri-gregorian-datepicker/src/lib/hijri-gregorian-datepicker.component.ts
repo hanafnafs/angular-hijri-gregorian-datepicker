@@ -104,15 +104,24 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     this.years = [];
     this.initializeYearsAndMonths();
     let c_year, c_month, hijriDate, month, day;
-    // if (this.selectToday) {
     if (this.mode == 'greg') {
-      c_year = this.currentSysDate.getFullYear();
-      c_month = this.currentSysDate.getMonth() + 1;
+      if (this.selectToday) {
+        c_year = this.currentSysDate.getFullYear();
+        c_month = this.currentSysDate.getMonth() + 1;
+      } else {
+        c_year = this.dateBeforeToggle['gregorian'].split('/')[0];
+        c_month = Number(this.dateBeforeToggle['gregorian'].split('/')[1]);
+      }
       this.gregorianMonth = c_month;
       this.days = this.generateDays(c_year, c_month, '0');
     } else {
-      c_year = this.parseArabic(moment(this.currentSysDate).format('iYYYY'));
-      c_month = this.parseArabic(moment(this.currentSysDate).format('iMM'));
+      if (this.selectToday) {
+        c_year = this.parseArabic(moment(this.currentSysDate).format('iYYYY'));
+        c_month = this.parseArabic(moment(this.currentSysDate).format('iMM'));
+      } else {
+        c_year = this.dateBeforeToggle['hijri'].split('/')[0];
+        c_month = Number(this.dateBeforeToggle['hijri'].split('/')[1]);
+      }
       this.hijriMonth = c_month;
       hijriDate = moment(c_year + '/' + c_month + '/1', 'iYYYY/iM/iD');
       day = hijriDate['_i'].split('-')[2];
@@ -122,6 +131,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
           .split('is')[1]
           .split('/')[1]
       );
+      console.log(this.selectToday);
       this.days = this.generateDays(
         this.selectToday
           ? this.currentSysDate.getFullYear()
@@ -306,7 +316,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   parseArabic(arabicNum: any) {
     //Convert arabic numbers to english equivalent
     return arabicNum.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d) {
-      return d.charCodeAt(0) - 1632; // Convert Arabic numbers
+      return d.charCodeAt(0) - 1632;
     });
   }
 
