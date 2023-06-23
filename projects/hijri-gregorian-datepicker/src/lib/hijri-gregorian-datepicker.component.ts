@@ -3,6 +3,7 @@ import * as moment from 'moment-hijri';
 import * as momentJs from 'moment';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Day } from '../interfaces/day-model';
+import { stylesConfig } from '../interfaces/styles-config-model';
 
 @Component({
   selector: 'hijri-gregorian-datepicker',
@@ -29,6 +30,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   @Input() hijriDateText: string = 'Hijri Date';
   @Input() pastYearsLimit: number = 90;
   @Input() futureYearsLimit: number = 0;
+  @Input() styles: stylesConfig;
 
   //Outputs
   @Output() onSubmit = new EventEmitter<object>();
@@ -85,7 +87,8 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   constructor(public formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    momentJs.locale(this.locale);
+    console.log(this.styles);
+    // momentJs.locale(this.locale);
     this.initalizeForm();
     this.getTodaysDateInfo();
     this.calendarInitialization();
@@ -397,7 +400,6 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     this.calendarInitialization();
   }
 
-
   onDayClicked(day: Day, isDateBeforeToggle?: boolean) {
     //Fires when user clicks on a specific date
     if (day.date) {
@@ -408,7 +410,10 @@ export class HijriGregorianDatepickerComponent implements OnInit {
               this.days[i][j].selected = false;
             }
           }
-          if (isDateBeforeToggle && day.gregorian == this.days[i][j].gregorian) {
+          if (
+            isDateBeforeToggle &&
+            day.gregorian == this.days[i][j].gregorian
+          ) {
             this.days[i][j].selected = true;
             this.onDaySelect.emit(this.days[i][j].selected);
             if (this.multiple) {
@@ -462,6 +467,27 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     //Check if the day whether in future or past
     if (moment(day.date).isAfter(new Date(), 'day') == true) {
       return true;
+    }
+  }
+
+  checkTodaysDate(day: Day) {
+    //Check if passed day is today or not
+    return (
+      (this.todaysDate?.gregorian == day?.gregorian ||
+        this.todaysDate?.hijri == day?.hijri) &&
+      !this.disableDayPicker
+    );
+  }
+
+  parseEnglish(hijriDate: string) {
+    if (hijriDate) {
+      const arabicNumbers =
+        '\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669';
+      return new String(hijriDate).replace(/[0123456789]/g, (d) => {
+        if (arabicNumbers[d] != null) {
+          return arabicNumbers[d];
+        }
+      });
     }
   }
 }

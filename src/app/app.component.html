@@ -1,11 +1,11 @@
 <div class="app-container">
-  <button
+  <!-- <button
     type="button"
     class="open-datepicker"
     (click)="onOpenCalendarClicked()"
   >
     Toggle Calendar
-  </button>
+  </button> -->
   <div class="calendar-container">
     <hijri-gregorian-datepicker
       [hidden]="toggle"
@@ -24,6 +24,7 @@
       [hijriDateText]="'Hijri Date'"
       [pastYearsLimit]="20"
       [futureYearsLimit]="0"
+      [styles]="stylesConfig"
       (onSubmit)="onSubmitTest($event)"
       (onDaySelect)="onChangeTest($event)"
       (onMonthChange)="onMonthChangeTest($event)"

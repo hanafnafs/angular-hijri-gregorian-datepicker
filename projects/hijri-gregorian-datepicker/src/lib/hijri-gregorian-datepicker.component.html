@@ -1,9 +1,10 @@
 <div class="calendar-container">
   <div
-    class="hijri-toggle"
+    class="toggle-section"
     [dir]="dir"
     *ngIf="canChangeMode"
     (click)="changeCalendarMode()"
+    [ngStyle]="{ color: styles.primaryColor }"
   >
     <label class="switch">
       <input
@@ -11,14 +12,22 @@
         [disabled]="!canChangeMode"
         justify="end"
         [(ngModel)]="toggle"
+        [ngStyle]="{ 'accent-color': styles.primaryColor }"
       />
     </label>
     <span> {{ hijriDateText }} </span>
   </div>
 
-  <div class="today-date-section" *ngIf="todaysDateSection">
+  <div
+    class="todays-date-section"
+    *ngIf="todaysDateSection"
+    [ngStyle]="{
+      'background-color': styles.backgroundColor,
+      color: styles.primaryColor
+    }"
+  >
     <div
-      class="info"
+      class="text-info"
       [ngClass]="{
         order: dir == 'rtl'
       }"
@@ -26,7 +35,14 @@
       <p>{{ todaysDateText }}</p>
     </div>
 
-    <div class="data" [dir]="dir">
+    <div
+      class="data"
+      [dir]="dir"
+      [ngStyle]="{
+        'background-color': styles.todaysDateBgColor,
+        color: styles.todaysDateTextColor
+      }"
+    >
       <p *ngIf="mode == 'hijri'">
         {{ currentDate.split("/")[2] }}
 
@@ -46,12 +62,13 @@
   </div>
 
   <div class="period-container">
-    <form [formGroup]="periodForm" class="periodForm">
+    <form [formGroup]="periodForm" class="period-form">
       <div
-        class="selectItem"
+        class="select-item"
         [ngClass]="{
           order: dir == 'ltr'
         }"
+        [ngStyle]="{ 'background-color': styles.backgroundColor }"
       >
         <label *ngIf="!selectedYearAndMonth['year'].value">السنة</label>
 
@@ -61,6 +78,7 @@
           placeholder="السنة"
           (change)="onPeriodChange('year')"
           [dir]="dir"
+          [ngStyle]="{ color: styles.primaryColor }"
         >
           <option *ngFor="let year of years" [ngValue]="year">
             {{ year?.text }}
@@ -69,10 +87,11 @@
       </div>
 
       <div
-        class="selectItem"
+        class="select-item"
         [ngClass]="{
           order: dir == 'rtl'
         }"
+        [ngStyle]="{ 'background-color': styles.backgroundColor }"
       >
         <label *ngIf="!selectedYearAndMonth['month'].value">الشهر</label>
 
@@ -82,6 +101,7 @@
           placeholder="الشهر"
           (change)="onPeriodChange('month')"
           [dir]="dir"
+          [ngStyle]="{ color: styles.primaryColor }"
         >
           <option *ngFor="let month of months" [ngValue]="month">
             {{ locale == "ar" ? month?.nameAr : month?.nameEn }}
@@ -91,38 +111,56 @@
     </form>
   </div>
 
-  <div class="container">
-    <div class="no-gutters">
+  <div
+    class="calendar-layout"
+    [ngStyle]="{ 'background-color': styles.backgroundColor }"
+  >
+    <div class="week-days">
       <div
         class="week-day"
+        [ngStyle]="{ color: styles.secondaryColor }"
         *ngFor="let date of locale == 'ar' ? weekdaysAr : weekdaysEn"
       >
         {{ date }}
       </div>
     </div>
 
-    <div class="cal-container" [dir]="dir">
+    <div [dir]="dir">
       <div class="week" *ngFor="let week of days">
         <div
           class="day"
           *ngFor="let day of week"
           (click)="disableDayPicker == false ? onDayClicked(day) : ''"
+          [ngStyle]="{
+            'background-color': styles.backgroundColor,
+            color: styles.primaryColor
+          }"
         >
           <div
             id="greg-day"
             [ngClass]="{
-              todayDate:
-                (todaysDate?.gregorian == day?.gregorian ||
-                  todaysDate?.hijri == day?.hijri) &&
-                !disableDayPicker,
-              selectedDate: day?.selected == true,
-              muted: checkFutureValidation(day) && futureValidation
+              'todays-date': checkTodaysDate(day),
+              'selected-date': day?.selected == true
+            }"
+            [ngStyle]="{
+              border: checkTodaysDate(day)
+                ? '1px solid ' + styles.secondaryColor
+                : '',
+              'background-color':
+                day?.selected == true ? styles.secondaryColor : '',
+              color:
+                (day?.selected == true ? styles.todaysDateTextColor : '') ||
+                (checkFutureValidation(day) && futureValidation
+                  ? styles.disabledDayColor
+                  : '')
             }"
           >
-            <span *ngIf="mode == 'greg'">{{ day?.gregorian?.split("/")[2] | number }}</span>
+            <span *ngIf="mode == 'greg'">{{
+              day?.gregorian?.split("/")[2] | number
+            }}</span>
 
             <span id="hijri-day" *ngIf="mode == 'hijri'">{{
-              day?.hijri?.split("/")[2] | number
+              parseEnglish(day?.hijri?.split("/")[2] | number)
             }}</span>
           </div>
         </div>
@@ -140,6 +178,10 @@
       "
       (click)="onConfirmClicked()"
       *ngIf="!disableDayPicker"
+      [ngStyle]="{
+        'background-color': styles.secondaryColor,
+        color: styles.confirmBtnTextColor
+      }"
     >
       {{ submitTextButton }}
     </button>
