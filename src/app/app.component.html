@@ -15,7 +15,7 @@
       [disableYearPicker]="false"
       [disableMonthPicker]="false"
       [disableDayPicker]="false"
-      [multiple]="false"
+      [multiple]="true"
       [mode]="'hijri'"
       [dir]="'ltr'"
       [locale]="'en'"
@@ -23,11 +23,19 @@
       [todaysDateText]="'Todays\'s Date'"
       [hijriDateText]="'Hijri Date'"
       [pastYearsLimit]="20"
-      [futureYearsLimit]="10"
+      [futureYearsLimit]="0"
       (onSubmit)="onSubmitTest($event)"
-      (onChange)="onChangeTest($event)"
+      (onDaySelect)="onChangeTest($event)"
       (onMonthChange)="onMonthChangeTest($event)"
       (onYearChange)="onYearChangeTest($event)"
     ></hijri-gregorian-datepicker>
+  </div>
+  <div class="event-container">
+    <p *ngIf="(selectedDate | json) != '{}'">
+      {{ selectedDate | json }}
+    </p>
+    <p *ngIf="selectedDates.length">
+      {{ selectedDates | json }}
+    </p>
   </div>
 </div>

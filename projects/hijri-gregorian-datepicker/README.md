@@ -1,13 +1,13 @@
 # Angular Hijri Gregorian Calendar(Datepicker)
 
-Angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 14+ projects.
+Angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 13, 14+ projects.
 
 [![Build](https://img.shields.io/badge/build-passing-green.svg)](https://www.npmjs.com/package/angular-hijri-gregorian-datepicker)
 [![Dependencies](https://img.shields.io/badge/dependencies-uptodate-green.svg)](https://www.npmjs.com/package/angular-hijri-gregorian-datepicker)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://www.npmjs.com/package/angular-hijri-gregorian-datepicker)
 
 <br />
-<b> Robust</b> and <b>tested</b> code angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 14+ projects.<br />
+<b> Robust</b> and <b>tested</b> code angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 13, 14+ projects.<br />
 Ionic 3, 4, 5 + is supported, can be used in iOS and Android.<br />
 
 <b> Star it to inspire us to build the best component! </b>
@@ -17,7 +17,7 @@ Ionic 3, 4, 5 + is supported, can be used in iOS and Android.<br />
 ## Preview 
 
 <p>
-  <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/1.png" width="25%" />
+  <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/1.png" width="25%"/>
   <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/2.png" width="25%"/>
   <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/3.png" width="25%"/>
   <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/4.png" width="25%"/>
@@ -51,7 +51,7 @@ Online demo can be found [here](https://hanafnafs.github.io/angular-hijri-gregor
 ## Supported platforms
 
 <b>Angular</b> 7, 8, 9, 10, 11, 12, 14 +<br />
-<b>Ionic</b>3, 4, 5 +<br />
+<b>Ionic</b> 3, 4, 5 +<br />
 Mobile browsers and WebViews on: <b>Android</b> and <b>iOS</b><br />
 Desktop browsers: <b>Chrome, Firefox, Safari, Edge v.79 +</b><br />
 Other browsers:  <b>Edge v.41 - 44</b> (without code hidden feature)
@@ -95,12 +95,12 @@ import { HijriGregorianDatepickerModule } from 'angular-hijri-gregorian-datepick
   [submitTextButton]="'Confirm'"
   [todaysDateText]="'Todays\'s Date'"
   [hijriDateText]="'Hijri Date'"
-  [pastYearsLimit]="20"
-  [futureYearsLimit]="10"
-  (onSubmit)="onSubmitTest($event)"
-  (onChange)="onChangeTest($event)"
-  (onMonthChange)="onMonthChangeTest($event)"
-  (onYearChange)="onYearChangeTest($event)"
+  [pastYearsLimit]="90"
+  [futureYearsLimit]="0"
+  (onSubmit)="onSubmitFunction($event)"
+  (onDaySelect)="onDaySelectFunction($event)"
+  (onMonthChange)="onMonthChangeFunction($event)"
+  (onYearChange)="onYearChangeFunction($event)"
 ></hijri-gregorian-datepicker>
 
 ```
@@ -155,7 +155,7 @@ Inside your component.ts:
 | Output  | Description        |
 |----------|--------------------|
 | `onSubmit` | Will be called every time when a user submits a selected date |
-| `onChange` | Will be called every time when a user selects new date |
+| `onDaySelect` | Will be called every time when a user selects new date |
 | `onMonthChange` | Will be called every time the month value changes |
 | `onYearChange` | Will be called every time the year value changes |
 

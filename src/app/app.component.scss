@@ -10,12 +10,18 @@
     margin: auto;
     display: block;
     box-shadow: none !important;
-    cursor:pointer;
+    cursor: pointer;
   }
 
   .calendar-container {
     display: block;
     margin: auto;
-    // width: 50%;
+  }
+
+  .event-container {
+    width: 87.5%;
+    display: block;
+    margin: auto;
+    white-space: pre-wrap;
   }
 }

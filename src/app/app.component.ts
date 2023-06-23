@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Day } from 'projects/hijri-gregorian-datepicker/src/interfaces/day-model';
 
 @Component({
   selector: 'app-root',
@@ -7,19 +8,27 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   toggle: boolean = false;
-  onSubmitTest(ev) {
+  selectedDate = {} as Day;
+  selectedDates = [] as Day[];
+  onSubmitTest(ev: any) {
     console.log('App component ', ev);
   }
 
-  onChangeTest(ev) {
+  onChangeTest(eventData: any) {
+    // console.log('App component ', ev);
+    console.log('App component ', eventData);
+    if (!Array.isArray(eventData)) {
+      this.selectedDate = eventData;
+    } else {
+      this.selectedDates = eventData;
+    }
+  }
+
+  onMonthChangeTest(ev: any) {
     console.log('App component ', ev);
   }
 
-  onMonthChangeTest(ev) {
-    console.log('App component ', ev);
-  }
-
-  onYearChangeTest(ev) {
+  onYearChangeTest(ev: any) {
     console.log('App component ', ev);
   }
 
