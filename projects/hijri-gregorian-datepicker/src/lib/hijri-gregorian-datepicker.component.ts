@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment-hijri';
 import * as momentJs from 'moment';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Day } from '../interfaces/day-model';
 import { stylesConfig } from '../interfaces/styles-config-model';
 
@@ -88,10 +88,10 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   selectedDate;
   currentDate;
   currentSysDate = new Date();
-  periodForm: FormGroup;
+  periodForm: UntypedFormGroup;
   dateBeforeToggle = {} as any;
   multipleSelectedDates = [] as Day[];
-  constructor(public formBuilder: FormBuilder) {}
+  constructor(public formBuilder: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     // console.log(this.styles);
