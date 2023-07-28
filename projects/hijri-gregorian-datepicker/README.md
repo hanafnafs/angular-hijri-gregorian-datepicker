@@ -1,18 +1,12 @@
 # Angular Hijri Gregorian Calendar(Datepicker)
 
-Angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 13, 14+ projects.
+* Robust and tested code angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 13, 14+ projects.
+* Ionic 3, 4, 5 + is supported, can be used in iOS and Android
+
 
 [![Build](https://img.shields.io/badge/build-passing-green.svg)](https://www.npmjs.com/package/angular-hijri-gregorian-datepicker)
 [![Dependencies](https://img.shields.io/badge/dependencies-uptodate-green.svg)](https://www.npmjs.com/package/angular-hijri-gregorian-datepicker)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://www.npmjs.com/package/angular-hijri-gregorian-datepicker)
-
-<br />
-<b> Robust</b> and <b>tested</b> code angular hijri/gregorian calendar/datepicker component for Angular 7 - 12, 13, 14+ projects.<br />
-Ionic 3, 4, 5 + is supported, can be used in iOS and Android.<br />
-
-<b> Star it to inspire us to build the best component! </b>
-
-<br />
 
 ## Preview 
 
@@ -20,14 +14,14 @@ Ionic 3, 4, 5 + is supported, can be used in iOS and Android.<br />
   <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/1.png" width="25%"/>
   <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/2.png" width="25%"/>
   <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/3.png" width="25%"/>
-  <img src="https://github.com/hanafnafs/angular-hijri-gregorian-datepicker/blob/master/src/assets/imgs/4.png" width="25%"/>
 </p>
 
-<br />
 
 ## Examples/Demo
 
 Online demo can be found [here](https://hanafnafs.github.io/angular-hijri-gregorian-datepicker/) 
+
+<b> Star it to inspire us to build the best component! </b>
 
 <br />
 
@@ -84,23 +78,26 @@ import { HijriGregorianDatepickerModule } from 'angular-hijri-gregorian-datepick
 <hijri-gregorian-datepicker
   [canChangeMode]="true"
   [todaysDateSection]="true"
-  [futureValidation]="true"
+  [futureValidation]="false"
   [disableYearPicker]="false"
   [disableMonthPicker]="false"
   [disableDayPicker]="false"
   [multiple]="false"
+  [isRequired]="true"
+  [showConfirmButton]="true"
   [mode]="'hijri'"
-  [dir]="'rtl'"
+  [dir]="'ltr'"
   [locale]="'en'"
   [submitTextButton]="'Confirm'"
   [todaysDateText]="'Todays\'s Date'"
   [hijriDateText]="'Hijri Date'"
-  [pastYearsLimit]="90"
+  [pastYearsLimit]="20"
   [futureYearsLimit]="0"
-  (onSubmit)="onSubmitFunction($event)"
-  (onDaySelect)="onDaySelectFunction($event)"
-  (onMonthChange)="onMonthChangeFunction($event)"
-  (onYearChange)="onYearChangeFunction($event)"
+  [styles]="stylesConfig"
+  (onSubmit)="onSubmitTest($event)"
+  (onDaySelect)="onChangeTest($event)"
+  (onMonthChange)="onMonthChangeTest($event)"
+  (onYearChange)="onYearChangeTest($event)"
 ></hijri-gregorian-datepicker>
 
 ```
@@ -137,6 +134,8 @@ Inside your component.ts:
 | <b>`disableMonthPicker`</b> | boolean | `false` | When `true` the user cannot select different months, if `false` month select will be enabled |
 | <b>`disableDayPicker`</b> | boolean | `false` | When `true` the user cannot select days, if `false` days select will be enabled | 
 | <b>`multiple`</b> | boolean | `false` | When `true` the user can select multiple days, if `false` only one date can be selected | 
+| <b>`isRequired`</b> | boolean | `true` | When `true` the confirm button will be disabled until user selects a date, if `false` the button will be enabled | 
+| <b>`showConfirmButton`</b> | boolean | `true` | When `true` the confirm button will be displayed, if `false` it will be hidden | 
 | <b>`mode`</b> | string | `greg` | Calendar mode, either `hijri` or `greg` |
 | <b>`dir`</b> | string | `ltr` | Layout direction, either `ltr` or `rtl` |
 | <b>`locale`</b> | string | `en` | The language of the calendar layout, either `ar` or `en` |
@@ -145,6 +144,7 @@ Inside your component.ts:
 | <b>`hijriDateText`</b> | string | `Hijri Date` | Hijri date text(checkbox) |
 | <b>`pastYearsLimit`</b> | number | `90` | indicates for the past years number you want to allow user to select from |
 | <b>`futureYearsLimit`</b> | number | `0` | indicates for the future years number you want to allow user to select from |
+| <b>`styles`</b> | object | `0` | indicates for the future years number you want to allow user to select from |
 
 
 

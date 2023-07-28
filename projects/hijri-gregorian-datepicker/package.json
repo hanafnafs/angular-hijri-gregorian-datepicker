@@ -1,6 +1,6 @@
 {
   "name": "angular-hijri-gregorian-datepicker",
-  "version": "0.0.3",
+  "version": "0.0.7",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^12.0.5",
@@ -25,7 +25,9 @@
   "keywords": [
     "ng",
     "angular",
+    "ionic",
     "calendar",
+    "datepicker",
     "hijri",
     "gregorian",
     "hijri gregorian calendar",
@@ -34,7 +36,7 @@
     "gregorian hijri calendar",
     "moment hijri",
     "angular gregorian calendar",
-    "covert hijri gregorian",
+    "convert hijri gregorian",
     "angular datepicker",
     "ionic hijri datepicker",
     "gregorian datepicker",

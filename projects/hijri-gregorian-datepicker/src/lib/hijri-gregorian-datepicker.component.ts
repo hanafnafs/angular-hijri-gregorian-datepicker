@@ -14,7 +14,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   //Inputs
   @Input() maxDate: Date;
   @Input() minDate: Date;
-  @Input() selectToday: boolean = true; /// NOT YET
+  @Input() selectToday: boolean = true; // NOT YET
   @Input() canChangeMode: boolean = true;
   @Input() todaysDateSection: boolean = true;
   @Input() futureValidation: boolean = true;
@@ -22,12 +22,19 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   @Input() disableMonthPicker: boolean = false;
   @Input() disableDayPicker: boolean = false;
   @Input() multiple: boolean = false;
+  @Input() isRequired: boolean = false;
+  @Input() showConfirmButton: boolean = true;
   @Input() mode: string = 'greg';
   @Input() dir: string = 'ltr';
   @Input() locale: string = 'en';
   @Input() submitTextButton: string = 'Confirm';
   @Input() todaysDateText: string = "Today's Date";
   @Input() hijriDateText: string = 'Hijri Date';
+  @Input() minHijri: string; //NOT YET
+  @Input() maxHijri: string; //NOT YET
+  @Input() minGreg: string; //NOT YET
+  @Input() maxGreg: string; //NOT YET
+
   @Input() pastYearsLimit: number = 90;
   @Input() futureYearsLimit: number = 0;
   @Input() styles: stylesConfig;
@@ -58,8 +65,8 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     { nameAr: 'مارس', nameEn: 'March', value: 3 },
     { nameAr: 'ابريل', nameEn: 'April', value: 4 },
     { nameAr: 'مايو', nameEn: 'May', value: 5 },
-    { nameAr: 'يوليو', nameEn: 'June', value: 6 },
-    { nameAr: 'يونيه', nameEn: 'July', value: 7 },
+    { nameAr: 'يونيو', nameEn: 'June', value: 6 },
+    { nameAr: 'يوليو', nameEn: 'July', value: 7 },
     { nameAr: 'اغسطس', nameEn: 'August', value: 8 },
     { nameAr: 'سبتمبر', nameEn: 'September', value: 9 },
     { nameAr: 'اكتوبر', nameEn: 'October', value: 10 },
@@ -87,11 +94,12 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   constructor(public formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    console.log(this.styles);
+    // console.log(this.styles);
     // momentJs.locale(this.locale);
     this.initalizeForm();
     this.getTodaysDateInfo();
     this.calendarInitialization();
+    // console.log(this.maxHijri, this.maxGreg);
   }
 
   initalizeForm() {
@@ -415,7 +423,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
             day.gregorian == this.days[i][j].gregorian
           ) {
             this.days[i][j].selected = true;
-            this.onDaySelect.emit(this.days[i][j].selected);
+            this.onDaySelect.emit(this.days[i][j]);
             if (this.multiple) {
               this.multipleSelectedDates.push(this.days[i][j]);
             }
@@ -473,9 +481,9 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   checkTodaysDate(day: Day) {
     //Check if passed day is today or not
     return (
-      (this.todaysDate?.gregorian == day?.gregorian ||
-        this.todaysDate?.hijri == day?.hijri) &&
-      !this.disableDayPicker
+      this.todaysDate?.gregorian == day?.gregorian ||
+      this.todaysDate?.hijri == day?.hijri
+      // && !this.disableDayPicker
     );
   }
 

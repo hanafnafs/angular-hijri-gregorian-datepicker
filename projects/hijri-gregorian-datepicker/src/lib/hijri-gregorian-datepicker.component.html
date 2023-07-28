@@ -160,7 +160,9 @@
             }}</span>
 
             <span id="hijri-day" *ngIf="mode == 'hijri'">{{
-              parseEnglish(day?.hijri?.split("/")[2] | number)
+              locale == "en"
+                ? (day?.hijri?.split("/")[2] | number)
+                : parseEnglish(day?.hijri?.split("/")[2] | number)
             }}</span>
           </div>
         </div>
@@ -173,11 +175,12 @@
       type="button"
       class="confirm-btn"
       [disabled]="
-        (!selectedDate && !multiple) ||
-        (!multipleSelectedDates.length && multiple)
+        isRequired &&
+        ((!selectedDate && !multiple) ||
+          (!multipleSelectedDates.length && multiple))
       "
       (click)="onConfirmClicked()"
-      *ngIf="!disableDayPicker"
+      *ngIf="showConfirmButton"
       [ngStyle]="{
         'background-color': styles.secondaryColor,
         color: styles.confirmBtnTextColor
