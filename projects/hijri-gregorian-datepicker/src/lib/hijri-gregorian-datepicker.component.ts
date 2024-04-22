@@ -99,6 +99,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     this.initalizeForm();
     this.getTodaysDateInfo();
     this.calendarInitialization();
+    this.checkIslamicDate();
     // console.log(this.maxHijri, this.maxGreg);
   }
 
@@ -223,6 +224,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     increment: number,
     exactDay?: any
   ) {
+    // console.log(week, dayWeek, year, month, increment,exactDay);
     //Get each date
     let date: any;
     let day = week * 7 + dayWeek - increment;
@@ -246,7 +248,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
         }
       } else {
         date = new Date(
-          '' + year + '/' + month + '/' + (day + parseInt(exactDay))
+          '' + year + '/' + month + '/' + (day - 1 + parseInt(exactDay))
         );
         if (isNaN(date.getTime())) {
           fechaAuxiliar = new Date('' + year + '/' + month.toString() + '-1');
@@ -256,7 +258,17 @@ export class HijriGregorianDatepickerComponent implements OnInit {
         }
       }
     }
-    let hijri = moment(date).format('iYYYY/iMM/iDD');
+    // let hijri = moment(date).format('iYYYY/iMM/iDD');
+    let hijri;
+    // let currentDate = new Date();
+    // if (date.getFullYear() == currentDate.getFullYear()) {
+    //   hijri = moment(date).format('iYYYY/iMM/iDD');
+    // } else {
+    hijri = this.convertToHijri(
+      moment(date).format('YYYY-MM-DD'),
+      'en-SA-u-ca-islamic-rgsa'
+    );
+    // }
     return {
       date: date,
       gregorianMonth: date.getMonth() + 1,
@@ -267,6 +279,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   }
 
   private generateDays(year: number, month: number, day?: any, inc?: any) {
+    console.log(year, month, day, inc);
     //Generate days function
     momentJs.locale('en');
     const increment = inc ? inc : this.getIncrement(year, month);
@@ -286,11 +299,19 @@ export class HijriGregorianDatepickerComponent implements OnInit {
         );
       }
     });
+    console.log('BEFORE ', days);
     var englishDate = momentJs(days[0][0].date).format('ddd');
+    let weekday = new Date(days[0][0].date).toLocaleString('en-us', {
+      weekday: 'short',
+    });
+    // console.log(englishDate, "xxx")
+    // console.log(weekday, "yyyy")
+
     var monthStartDate = this.weekdaysEn.findIndex(
       (item) => item == englishDate
     );
     days[0] = [...Array(monthStartDate).fill({}), ...days[0]];
+    console.log(days);
     return this.arrangeCalendarDays(days);
   }
 
@@ -350,19 +371,23 @@ export class HijriGregorianDatepickerComponent implements OnInit {
       );
     } else {
       //Get corresponding date in hijri
-      let year, month, day, hijriDate;
-      hijriDate = moment(
+      let year, month, day, gregDate;
+      console.log(
+        `Selected year: ${this.selectedYearAndMonth['year'].value} Selected month: ${this.selectedYearAndMonth['month'].value} `
+      );
+      gregDate = moment(
         this.selectedYearAndMonth['year'].value +
           '/' +
           this.selectedYearAndMonth['month'].value +
           '/1',
         'iYYYY/iM/iD'
       );
-      day = hijriDate['_i'].split('-')[2];
-      year = hijriDate['_i'].split('-')[0];
+      console.log('GREG DATE: , ', gregDate);
+      day = gregDate['_i'].split('-')[2];
+      year = gregDate['_i'].split('-')[0];
       this.hijriMonth = this.selectedYearAndMonth['month'].value;
       month = this.parseArabic(
-        moment(hijriDate)
+        moment(gregDate)
           .format('iYYYY/iM/iD[is]YYYY/M/D')
           .split('is')[1]
           .split('/')[1]
@@ -497,5 +522,30 @@ export class HijriGregorianDatepickerComponent implements OnInit {
         }
       });
     }
+  }
+
+  convertToHijri(date, to?) {
+    date = new Date(date);
+    let hijri = date
+      .toLocaleDateString(`${to}`, {
+        timeZone: 'UTC',
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+      })
+      .split(' ')[0]
+      .split('/');
+    let res = hijri[2] + '/' + hijri[0] + '/' + hijri[1];
+    return res;
+  }
+
+  checkIslamicDate() {
+    const hijriDate = new Date('1445-01-01');
+
+    const intlDateFormat = new Intl.DateTimeFormat('en-u-ca-islamic');
+
+    const gregorianDate = intlDateFormat.format(hijriDate);
+
+    console.log(gregorianDate); // '2023-10-25'
   }
 }
