@@ -4,6 +4,9 @@ import * as momentJs from 'moment';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Day } from '../interfaces/day-model';
 import { stylesConfig } from '../interfaces/styles-config-model';
+import * as datesDictionary from '../_data/dictionary.json';
+import { CalendarObj } from '../interfaces/calendar';
+import { HijriGregorianDatepickerService } from '../_services/hijri-gregorian-datepicker.service';
 
 @Component({
   selector: 'hijri-gregorian-datepicker',
@@ -91,19 +94,46 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   periodForm: UntypedFormGroup;
   dateBeforeToggle = {} as any;
   multipleSelectedDates = [] as Day[];
-  constructor(public formBuilder: UntypedFormBuilder) {}
+  datesJson!: CalendarObj;
+  constructor(
+    public formBuilder: UntypedFormBuilder,
+    private _dateUtilsService: HijriGregorianDatepickerService
+  ) { }
 
   ngOnInit(): void {
     // console.log(this.styles);
     // momentJs.locale(this.locale);
-    this.initalizeForm();
+    this.datesJson = datesDictionary;
+    this.generateDates();
+    this.initializeForm();
     this.getTodaysDateInfo();
     this.calendarInitialization();
     this.checkIslamicDate();
     // console.log(this.maxHijri, this.maxGreg);
   }
 
-  initalizeForm() {
+
+  generateDates(): void {
+
+    for (const year in this.datesJson) {
+      for (const month in this.datesJson[year]) {
+
+        const monthData = this.datesJson[year][month];
+
+        const startDateStr = monthData?.fD?.gD;
+        const endDateStr = monthData?.lD?.gD;
+
+        const dates = this._dateUtilsService.generateDates(monthData?.fD, monthData?.lD);
+        console.log(dates)
+        // Add the dates to the data structure
+        this.datesJson[year][month].dates = dates;
+      }
+    }
+
+    console.log(JSON.stringify(this.datesJson, null, 2));
+  }
+
+  initializeForm() {
     //Initialize form control for month and year select
     this.periodForm = this.formBuilder.group({
       years: [{ value: '', disabled: this.disableYearPicker }, []],
@@ -192,11 +222,11 @@ export class HijriGregorianDatepickerComponent implements OnInit {
       this.hijriYear =
         this.futureYearsLimit == 0
           ? Number(
-              this.parseArabic(moment(this.currentSysDate).format('iYYYY'))
-            )
+            this.parseArabic(moment(this.currentSysDate).format('iYYYY'))
+          )
           : Number(
-              this.parseArabic(moment(this.currentSysDate).format('iYYYY'))
-            ) + this.futureYearsLimit;
+            this.parseArabic(moment(this.currentSysDate).format('iYYYY'))
+          ) + this.futureYearsLimit;
       for (let i = 0; i < this.hijriYear; i++) {
         if (i < this.pastYearsLimit) {
           let val = this.hijriYear--;
@@ -377,9 +407,9 @@ export class HijriGregorianDatepickerComponent implements OnInit {
       );
       gregDate = moment(
         this.selectedYearAndMonth['year'].value +
-          '/' +
-          this.selectedYearAndMonth['month'].value +
-          '/1',
+        '/' +
+        this.selectedYearAndMonth['month'].value +
+        '/1',
         'iYYYY/iM/iD'
       );
       console.log('GREG DATE: , ', gregDate);

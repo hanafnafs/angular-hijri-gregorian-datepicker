@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HijriGregorianDatepickerService } from './hijri-gregorian-datepicker.service';
+import { HijriGregorianDatepickerService } from '../_services/hijri-gregorian-datepicker.service';
 
 describe('HijriGregorianDatepickerService', () => {
   let service: HijriGregorianDatepickerService;
