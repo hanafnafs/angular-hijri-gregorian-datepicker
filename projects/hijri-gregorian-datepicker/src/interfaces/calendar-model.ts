@@ -1,10 +1,3 @@
-// interface DateInfo {
-//   gD: string; // Gregorian date
-//   uD: string; // Um al-Qurra date
-//   dN: string; // Day name shorthand
-//   uC: number; // Um al-Qurra number of days in the month
-// }
-
 export interface MonthInfo {
   fD: DayInfo; // First day of the month
   lD: DayInfo; // Last day of the month
@@ -27,8 +20,8 @@ export interface DayInfo {
 }
 
 export interface TodayDate {
-  gregorian: string;
-  ummAlQura: string;
+  gregorian?: string;
+  ummAlQura?: string;
 }
 
 export type MonthDays = DayInfo[];

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DayInfo } from 'projects/hijri-gregorian-datepicker/src/interfaces/calendar-model';
-// import { Day } from 'projects/hijri-gregorian-datepicker/src/interfaces/day-model';
+// import { Day } from '../assets/fonts/SDB-Regular.ttf';
 
 @Component({
   selector: 'app-root',
@@ -19,14 +19,17 @@ export class AppComponent {
     todaysDateTextColor: 'white',
     confirmBtnTextColor: '#ffffff',
     disabledDayColor: 'silver',
+    dayNameColor: '#0d7f91',
+    fontFamily: 'Default-Regular',
   } as any;
   mode = 'greg';
+  constructor() {}
+
   onSubmitTest(ev: any) {
     console.log('App component ', ev);
   }
 
   onChangeTest(eventData: any) {
-    // console.log('App component ', ev);
     console.log('App component ', eventData);
     if (!Array.isArray(eventData)) {
       this.selectedDate = eventData;
@@ -36,18 +39,18 @@ export class AppComponent {
   }
 
   onMonthChangeTest(ev: any) {
-    console.log('App component ', ev);
+    console.log('Month Changed: ', ev);
   }
 
   onYearChangeTest(ev: any) {
-    console.log('App component ', ev);
+    console.log('Year Changed ', ev);
   }
 
   onOpenCalendarClicked() {
     this.toggle = !this.toggle;
   }
 
-  toggleMode(){
+  toggleMode() {
     this.mode = this.mode == 'greg' ? 'ummAlQura' : 'greg';
   }
 }

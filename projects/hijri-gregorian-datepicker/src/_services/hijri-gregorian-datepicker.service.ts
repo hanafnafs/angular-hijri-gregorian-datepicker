@@ -324,7 +324,7 @@ export class HijriGregorianDatepickerService {
     return days[dayIndex];
   }
 
-  isFutureDate(inputDate) {
+  checkPastOrFuture(inputDate) {
     if (inputDate) {
       const [day, month, year] = inputDate?.split('/').map(Number);
       const dateToCheck = new Date(year, month - 1, day);

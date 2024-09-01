@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  HostBinding,
+} from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { stylesConfig } from '../interfaces/styles-config-model';
 import { HijriGregorianDatepickerService } from '../_services/hijri-gregorian-datepicker.service';
@@ -10,10 +17,8 @@ import { TodayDate, DayInfo } from '../interfaces/calendar-model';
   styleUrls: ['./hijri-gregorian-datepicker.component.scss'],
 })
 export class HijriGregorianDatepickerComponent implements OnInit {
-  //Inputs
-  @Input() maxDate: Date;
-  @Input() minDate: Date;
-  @Input() markToday: boolean = true; // NOT YET
+  /// Inputs
+  @Input() markToday: boolean = true;
   @Input() canChangeMode: boolean = true;
   @Input() todaysDateSection: boolean = true;
   @Input() futureValidation: boolean = true;
@@ -32,21 +37,17 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   @Input() ummAlQuraDateText: string = 'Hijri Date';
   @Input() monthSelectLabel: string = 'Month';
   @Input() yearSelectLabel: string = 'Year';
-  @Input() minHijri: string; //NOT YET
-  @Input() maxHijri: string; //NOT YET
-  @Input() minGreg: string; //NOT YET
-  @Input() maxGreg: string; //NOT YET
   @Input() pastYearsLimit: number = 90;
   @Input() futureYearsLimit: number = 0;
-  @Input() styles: stylesConfig;
   @Input() futureValidationMessageEn: string;
   @Input() futureValidationMessageAr: string;
-  //Outputs
+  @Input() styles: stylesConfig;
+  /// Outputs
   @Output() onSubmit = new EventEmitter<object>();
   @Output() onDaySelect = new EventEmitter<object>();
   @Output() onMonthChange = new EventEmitter<object>();
   @Output() onYearChange = new EventEmitter<object>();
-
+  /// Variables
   ummAlQuraMonths = [
     { labelAr: 'محرم', labelEn: 'Muharram', value: 1 },
     { labelAr: 'صفر', labelEn: 'Safar', value: 2 },
@@ -77,37 +78,38 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   ];
   ummAlQuraYear: number;
   gregYear: number;
-  years = [] as any;
-  weeks = [] as any;
-  months = [] as any;
+  years = [];
+  weeks = [];
+  months = [];
   weekdaysEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  weekdaysAr = ['سبت', 'جمعة', 'خميس', 'أربعاء', 'ثلاثاء', 'اثنين', 'أحد'];
-  todaysDate = {} as TodayDate;
-  selectedDay;
+  weekdaysAr = ['س', 'ج', 'خ', 'أر', 'ث', 'إث', 'أح'];
+  todaysDate: TodayDate = {};
+  selectedDay: DayInfo;
   periodForm: UntypedFormGroup;
-  dateBeforeToggle = {} as any;
   multipleSelectedDates = [] as DayInfo[];
+  @HostBinding('style.font-family') fontFamilyStyle: string;
   constructor(
     public formBuilder: UntypedFormBuilder,
     private _dateUtilsService: HijriGregorianDatepickerService
   ) {}
 
   ngOnInit(): void {
+    this.fontFamilyStyle = this.styles.fontFamily;
     this.initializeForm();
     this.getTodaysDateInfo();
     this.initializeYearsAndMonths();
   }
 
+  /// Initialize form control for month and year select
   initializeForm() {
-    //Initialize form control for month and year select
     this.periodForm = this.formBuilder.group({
       year: [{ value: '', disabled: this.disableYearPicker }, []],
       month: [{ value: '', disabled: this.disableMonthPicker }, []],
     });
   }
 
+  /// Initialize years and months for calendar
   initializeYearsAndMonths() {
-    //Initialize years and months for calendar
     if (this.mode == 'greg') {
       this.gregYear =
         this.futureYearsLimit == 0
@@ -161,20 +163,13 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     });
   }
 
-  parseArabic(arabicNum: any) {
-    //Convert arabic numbers to english equivalent
-    return arabicNum.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d: string) {
-      return d.charCodeAt(0) - 1632;
-    });
-  }
-
+  /// On change event of years and months
   onPeriodChange(type: string) {
     if (type == 'year') {
       this.onYearChange.emit(this.periodForm.controls['year'].value);
     } else {
       this.onMonthChange.emit(this.periodForm.controls['month'].value);
     }
-
     const days = this._dateUtilsService.getMonthData(
       '01/' +
         this.periodForm.controls['month'].value +
@@ -185,6 +180,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     this.weeks = this.generateWeeksArray(days);
   }
 
+  /// Get todays(greg and umm al qura) date info
   getTodaysDateInfo() {
     this.todaysDate.gregorian = this._dateUtilsService.formatDate(new Date());
     this.todaysDate.ummAlQura = this._dateUtilsService.convertDate(
@@ -199,6 +195,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     this.weeks = this.generateWeeksArray(days);
   }
 
+  /// Generate month weeks
   generateWeeksArray(daysArray) {
     console.log('generateWeeksArray', daysArray);
     const firstDayName = daysArray[0]?.dN;
@@ -225,11 +222,10 @@ export class HijriGregorianDatepickerComponent implements OnInit {
         week.push({});
       }
     });
-
-    // console.log('Weeks:', weeks);
     return weeks;
   }
 
+  /// Change calendar mode 'greg' or 'ummAlQura'
   changeCalendarMode() {
     this.mode = this.mode == 'greg' ? 'ummAlQura' : 'greg';
     this.initializeYearsAndMonths();
@@ -244,6 +240,7 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     console.log('this.mode', this.mode);
   }
 
+  /// On day clicked handler
   onDayClicked(day: DayInfo) {
     if (day.gD) {
       if (this.futureValidation) {
@@ -259,9 +256,11 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     }
   }
 
+  /// Mark day as selected
   markDaySelected(day: DayInfo) {
     if (day.selected) {
       day.selected = false;
+      this.selectedDay = undefined;
     } else {
       this.weeks.forEach((week: any) => {
         week.forEach((day: DayInfo) => {
@@ -273,8 +272,8 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     }
   }
 
+  /// On confirm button clicked
   onConfirmClicked() {
-    //On confirm button clicked
     if (this.multiple) {
       this.onSubmit.emit(this.multipleSelectedDates);
     } else {
@@ -282,44 +281,37 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     }
   }
 
+  /// Check if date from future
   checkFutureValidation(day: DayInfo) {
-    if (this._dateUtilsService.isFutureDate(day?.gD) == 'Future') {
+    if (this._dateUtilsService.checkPastOrFuture(day?.gD) == 'Future') {
       return true;
     }
   }
 
+  /// Check if passed day is today or not
   checkTodaysDate(day: DayInfo) {
-    //Check if passed day is today or not
     return (
       this.todaysDate?.gregorian == day?.gD ||
       this.todaysDate?.ummAlQura == day?.uD
     );
   }
 
-  parseEnglish(hijriDate: string) {
-    if (hijriDate) {
+  /// Convert english numbers to arabic equivalent
+  parseEnglish(date: string) {
+    if (date) {
       const arabicNumbers =
         '\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669';
-      return new String(hijriDate).replace(/[0123456789]/g, (d) => {
+      return new String(date).replace(/[0123456789]/g, (d) => {
         if (arabicNumbers[d] != null) {
           return arabicNumbers[d];
         }
       });
     }
   }
-
-  convertToHijri(date, to?) {
-    date = new Date(date);
-    let hijri = date
-      .toLocaleDateString(`${to}`, {
-        timeZone: 'UTC',
-        month: 'numeric',
-        day: 'numeric',
-        year: 'numeric',
-      })
-      .split(' ')[0]
-      .split('/');
-    let res = hijri[2] + '/' + hijri[0] + '/' + hijri[1];
-    return res;
+  /// Convert arabic numbers to english equivalent
+  parseArabic(arabicNum: any) {
+    return arabicNum.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d: string) {
+      return d.charCodeAt(0) - 1632;
+    });
   }
 }

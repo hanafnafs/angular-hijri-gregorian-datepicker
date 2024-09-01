@@ -82,7 +82,10 @@
           placeholder="السنة"
           (change)="onPeriodChange('year')"
           [dir]="dir"
-          [ngStyle]="{ color: styles.primaryColor }"
+          [ngStyle]="{
+            color: styles.primaryColor,
+            'font-family': styles.fontFamily
+          }"
         >
           <option *ngFor="let year of years" [ngValue]="year">
             {{ locale == "ar" ? parseEnglish(year) : year }}
@@ -105,7 +108,10 @@
           formControlName="month"
           (change)="onPeriodChange('month')"
           [dir]="dir"
-          [ngStyle]="{ color: styles.primaryColor }"
+          [ngStyle]="{
+            color: styles.primaryColor,
+            'font-family': styles.fontFamily
+          }"
         >
           <option *ngFor="let month of months" [ngValue]="month.value">
             {{ locale == "ar" ? month?.labelAr : month?.labelEn }}
@@ -122,7 +128,7 @@
     <div class="week-days">
       <div
         class="week-day"
-        [ngStyle]="{ color: styles.secondaryColor }"
+        [ngStyle]="{ color: styles.dayNameColor }"
         *ngFor="let date of locale == 'ar' ? weekdaysAr : weekdaysEn"
       >
         {{ date }}
@@ -195,7 +201,8 @@
       *ngIf="showConfirmButton"
       [ngStyle]="{
         'background-color': styles.secondaryColor,
-        color: styles.confirmBtnTextColor
+        color: styles.confirmBtnTextColor,
+        'font-family': styles.fontFamily
       }"
     >
       {{ submitTextButton }}
