@@ -11,11 +11,11 @@
         type="checkbox"
         [disabled]="!canChangeMode"
         justify="end"
-        [(ngModel)]="toggle"
+        [checked]="mode == 'ummAlQura'"
         [ngStyle]="{ 'accent-color': styles.primaryColor }"
       />
     </label>
-    <span> {{ hijriDateText }} </span>
+    <span> {{ ummAlQuraDateText }} </span>
   </div>
 
   <div
@@ -43,21 +43,23 @@
         color: styles.todaysDateTextColor
       }"
     >
-      <p *ngIf="mode == 'hijri'">
-        {{ currentDate.split("/")[2] }}
+      <p *ngIf="mode == 'ummAlQura'">
+        {{ todaysDate.ummAlQura.split("/")[2] }}
 
         {{
           locale == "ar"
-            ? hijriMonths[this.parseArabic(currentDate.split("/")[1]) - 1]
-                ?.nameAr
-            : hijriMonths[this.parseArabic(currentDate.split("/")[1]) - 1]
-                ?.nameEn
+            ? ummAlQuraMonths[
+                this.parseArabic(todaysDate.ummAlQura.split("/")[1]) - 1
+              ]?.labelAr
+            : ummAlQuraMonths[
+                this.parseArabic(todaysDate.ummAlQura.split("/")[1]) - 1
+              ]?.labelEn
         }}
 
-        {{ currentDate.split("/")[0] }}
+        {{ todaysDate.ummAlQura.split("/")[0] }}
       </p>
 
-      <p *ngIf="mode == 'greg'">{{ currentDate }}</p>
+      <p *ngIf="mode == 'greg'">{{ todaysDate.gregorian }}</p>
     </div>
   </div>
 
@@ -70,10 +72,12 @@
         }"
         [ngStyle]="{ 'background-color': styles.backgroundColor }"
       >
-        <label *ngIf="!selectedYearAndMonth['year'].value">السنة</label>
+        <label *ngIf="!periodForm.controls['year'].value">{{
+          yearSelectLabel
+        }}</label>
 
         <select
-          formControlName="years"
+          formControlName="year"
           class="{{ 'icon-' + dir }}"
           placeholder="السنة"
           (change)="onPeriodChange('year')"
@@ -81,7 +85,7 @@
           [ngStyle]="{ color: styles.primaryColor }"
         >
           <option *ngFor="let year of years" [ngValue]="year">
-            {{ year?.text }}
+            {{ locale == "ar" ? parseEnglish(year) : year }}
           </option>
         </select>
       </div>
@@ -93,18 +97,18 @@
         }"
         [ngStyle]="{ 'background-color': styles.backgroundColor }"
       >
-        <label *ngIf="!selectedYearAndMonth['month'].value">الشهر</label>
-
+        <label *ngIf="!periodForm.controls['month'].value">{{
+          monthSelectLabel
+        }}</label>
         <select
           class="{{ 'icon-' + dir }}"
-          formControlName="months"
-          placeholder="الشهر"
+          formControlName="month"
           (change)="onPeriodChange('month')"
           [dir]="dir"
           [ngStyle]="{ color: styles.primaryColor }"
         >
-          <option *ngFor="let month of months" [ngValue]="month">
-            {{ locale == "ar" ? month?.nameAr : month?.nameEn }}
+          <option *ngFor="let month of months" [ngValue]="month.value">
+            {{ locale == "ar" ? month?.labelAr : month?.labelEn }}
           </option>
         </select>
       </div>
@@ -126,7 +130,7 @@
     </div>
 
     <div [dir]="dir">
-      <div class="week" *ngFor="let week of days">
+      <div class="week" *ngFor="let week of weeks">
         <div
           class="day"
           *ngFor="let day of week"
@@ -143,9 +147,10 @@
               'selected-date': day?.selected == true
             }"
             [ngStyle]="{
-              border: checkTodaysDate(day)
-                ? '1px solid ' + styles.secondaryColor
-                : '',
+              border:
+                markToday && checkTodaysDate(day)
+                  ? '1px solid ' + styles.secondaryColor
+                  : '',
               'background-color':
                 day?.selected == true ? styles.secondaryColor : '',
               color:
@@ -156,27 +161,34 @@
             }"
           >
             <span *ngIf="mode == 'greg'">{{
-              day?.gregorian?.split("/")[2] | number
+              day?.gD?.split("/")[0] | number
             }}</span>
 
-            <span id="hijri-day" *ngIf="mode == 'hijri'">{{
+            <span id="ummAlQura-day" *ngIf="mode == 'ummAlQura'">{{
               locale == "en"
-                ? (day?.hijri?.split("/")[2] | number)
-                : parseEnglish(day?.hijri?.split("/")[2] | number)
+                ? (day?.uD?.split("/")[0] | number)
+                : parseEnglish(day?.uD?.split("/")[0] | number)
             }}</span>
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  <div class="future-validation" dir="auto" *ngIf="futureValidationMessage">
+    <span *ngIf="locale == 'ar'">
+      {{ futureValidationMessageAr }}
+    </span>
+    <span *ngIf="locale == 'en'">
+      {{ futureValidationMessageEn }}
+    </span>
+  </div>
   <div>
     <button
       type="button"
       class="confirm-btn"
       [disabled]="
         isRequired &&
-        ((!selectedDate && !multiple) ||
+        ((!selectedDay && !multiple) ||
           (!multipleSelectedDates.length && multiple))
       "
       (click)="onConfirmClicked()"

@@ -65,7 +65,8 @@
         font-size: 16px;
         display: block;
         margin: auto;
-        background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 140 140' width='15' height='15' xmlns='http://www.w3.org/2000/svg'><g><path d='m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z' fill='black'/></g></svg>") no-repeat 95% 50%;
+        background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 140 140' width='15' height='15' xmlns='http://www.w3.org/2000/svg'><g><path d='m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z' fill='black'/></g></svg>")
+          no-repeat 95% 50%;
         -moz-appearance: none;
         -webkit-appearance: none;
         appearance: none;
@@ -85,15 +86,16 @@
     }
   }
 
-
   .calendar-layout {
     border-radius: 4px;
     margin: 10px auto auto auto;
     display: block;
-
+    padding-bottom: 5px;
     .week-days {
       text-align: center;
       margin-top: 5px;
+      display: flex;
+      justify-content: space-evenly;
 
       .week-day {
         display: inline-block;
@@ -105,6 +107,8 @@
 
     .week {
       text-align: center;
+      display: flex;
+      justify-content: space-evenly;
     }
 
     .day {
@@ -123,7 +127,7 @@
       }
     }
 
-    #hijri-day {
+    #ummAlQura-day {
       font-size: 11px;
     }
 
@@ -136,7 +140,6 @@
       padding: 10px;
       border-radius: 5px;
     }
-
   }
 
   .confirm-btn {
@@ -145,7 +148,7 @@
     width: 100%;
     border: none;
     font-size: 17px;
-    margin: 3vh auto 3vh auto;
+    margin: 1.5vh auto 1.5vh auto;
     box-shadow: none !important;
   }
 
@@ -159,6 +162,11 @@
   }
 
   .order {
-    order: 1
+    order: 1;
+  }
+  .future-validation{
+    text-align: center;
+    color: #eb445a;
+    margin-top: 1.5vh;
   }
 }

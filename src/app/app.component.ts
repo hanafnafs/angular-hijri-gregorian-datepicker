@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Day } from 'projects/hijri-gregorian-datepicker/src/interfaces/day-model';
+import { DayInfo } from 'projects/hijri-gregorian-datepicker/src/interfaces/calendar-model';
+// import { Day } from 'projects/hijri-gregorian-datepicker/src/interfaces/day-model';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,8 @@ import { Day } from 'projects/hijri-gregorian-datepicker/src/interfaces/day-mode
 })
 export class AppComponent {
   toggle: boolean = false;
-  selectedDate = {} as Day;
-  selectedDates = [] as Day[];
+  selectedDate = {} as DayInfo;
+  selectedDates = [] as DayInfo[];
   stylesConfig = {
     backgroundColor: '#E3F6F5',
     primaryColor: '#272343',
@@ -19,6 +20,7 @@ export class AppComponent {
     confirmBtnTextColor: '#ffffff',
     disabledDayColor: 'silver',
   } as any;
+  mode = 'greg';
   onSubmitTest(ev: any) {
     console.log('App component ', ev);
   }
@@ -43,5 +45,9 @@ export class AppComponent {
 
   onOpenCalendarClicked() {
     this.toggle = !this.toggle;
+  }
+
+  toggleMode(){
+    this.mode = this.mode == 'greg' ? 'ummAlQura' : 'greg';
   }
 }

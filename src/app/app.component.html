@@ -8,7 +8,6 @@
   </button> -->
   <div class="calendar-container">
     <hijri-gregorian-datepicker
-      [hidden]="toggle"
       [canChangeMode]="true"
       [todaysDateSection]="true"
       [futureValidation]="true"
@@ -18,14 +17,19 @@
       [multiple]="false"
       [isRequired]="false"
       [showConfirmButton]="true"
-      [mode]="'hijri'"
-      [dir]="'ltr'"
-      [locale]="'en'"
+      [markToday]="true"
+      [mode]="mode"
+      [dir]="'rtl'"
+      [locale]="'ar'"
       [submitTextButton]="'Confirm'"
-      [todaysDateText]="'Todays\'s Date'"
-      [hijriDateText]="'Hijri Date'"
-      [pastYearsLimit]="127"
-      [futureYearsLimit]="0"
+      [todaysDateText]="'تاريخ اليوم'"
+      [ummAlQuraDateText]="'التاريخ الهجرى'"
+      [yearSelectLabel]="'Year'"
+      [monthSelectLabel]="'Month'"
+      [futureValidationMessageEn]="'Selected date cannot be in the future!'"
+      [futureValidationMessageAr]="'التاريخ المحدد لا يمكن ان يكون في المستقبل!'"
+      [pastYearsLimit]="115"
+      [futureYearsLimit]="5"
       [styles]="stylesConfig"
       (onSubmit)="onSubmitTest($event)"
       (onDaySelect)="onChangeTest($event)"
@@ -33,6 +37,8 @@
       (onYearChange)="onYearChangeTest($event)"
     ></hijri-gregorian-datepicker>
   </div>
+
+  <button (click)="toggleMode()">toggle</button>
   <div class="event-container">
     <p *ngIf="(selectedDate | json) != '{}'">
       {{ selectedDate | json }}
