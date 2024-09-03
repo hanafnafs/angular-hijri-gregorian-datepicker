@@ -164,7 +164,7 @@ Inside your component.ts:
 
 ## Dependencies
 
-Angular hijri gregorian based on `moment-hijri` that supports coversion between Gregorian and Hijri calendars.
+Angular hijri gregorian with `Zero` dependents that supports coversion between Gregorian and Hijri calendars.
 
 <br />
 
