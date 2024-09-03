@@ -1,14 +1,13 @@
 {
   "name": "angular-hijri-gregorian-datepicker",
-  "version": "0.0.7",
+  "version": "1.0.1",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^15.2.9",
     "@angular/core": "^15.2.9"
   },
   "dependencies": {
-    "tslib": "^2.1.0",
-    "moment-hijri": "^2.1.2"
+    "tslib": "^2.1.0"
   },
   "author": {
     "name": "Hanafnafs",
@@ -34,7 +33,10 @@
     "angular calendar",
     "ionic hijri gregorian calendar",
     "gregorian hijri calendar",
-    "moment hijri",
+    "umm al qura",
+    "umm al qura converter",
+    "convert umm al qura",
+    "angular umm al qura",
     "angular gregorian calendar",
     "convert hijri gregorian",
     "angular datepicker",

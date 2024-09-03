@@ -304,7 +304,9 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
 
   /// Check if date from future
   checkFutureValidation(day: DayInfo) {
-    if (this._dateUtilsService.checkPastOrFuture(day?.gD) == 'Future') {
+    if (
+      this._dateUtilsService.checkPastOrFuture(day?.gD, new Date()) == 'Future'
+    ) {
       return true;
     }
   }

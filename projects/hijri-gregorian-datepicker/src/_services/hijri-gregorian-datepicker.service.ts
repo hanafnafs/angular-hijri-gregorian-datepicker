@@ -307,11 +307,11 @@ export class HijriGregorianDatepickerService {
   }
 
   /// Check date is it in past or future
-  checkPastOrFuture(inputDate) {
+  checkPastOrFuture(inputDate, targetDate) {
     if (inputDate) {
       const [day, month, year] = inputDate?.split('/').map(Number);
       const dateToCheck = new Date(year, month - 1, day);
-      const today = new Date();
+      const today = targetDate;
       today.setHours(0, 0, 0, 0);
       if (dateToCheck > today) {
         return 'Future';
