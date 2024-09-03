@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DayInfo } from 'projects/hijri-gregorian-datepicker/src/interfaces/calendar-model';
+import { stylesConfig } from 'projects/hijri-gregorian-datepicker/src/interfaces/styles-config-model';
 // import { Day } from '../assets/fonts/SDB-Regular.ttf';
 
 @Component({
@@ -9,9 +10,8 @@ import { DayInfo } from 'projects/hijri-gregorian-datepicker/src/interfaces/cale
 })
 export class AppComponent {
   toggle: boolean = false;
-  selectedDate = {} as DayInfo;
-  selectedDates = [] as DayInfo[];
-  stylesConfig = {
+  selectedDate: DayInfo;
+  stylesConfig: stylesConfig = {
     backgroundColor: '#E3F6F5',
     primaryColor: '#272343',
     secondaryColor: '#272343',
@@ -21,20 +21,18 @@ export class AppComponent {
     disabledDayColor: 'silver',
     dayNameColor: '#0d7f91',
     fontFamily: 'Default-Regular',
-  } as any;
+  };
   mode = 'greg';
   constructor() {}
 
-  onSubmitTest(ev: any) {
-    console.log('App component ', ev);
+  onSubmit(ev: any) {
+    console.log('On Submit ', ev);
   }
 
-  onChangeTest(eventData: any) {
-    console.log('App component ', eventData);
+  onChange(eventData: any) {
+    console.log('On Change ', eventData);
     if (!Array.isArray(eventData)) {
       this.selectedDate = eventData;
-    } else {
-      this.selectedDates = eventData;
     }
   }
 
@@ -44,10 +42,6 @@ export class AppComponent {
 
   onYearChangeTest(ev: any) {
     console.log('Year Changed ', ev);
-  }
-
-  onOpenCalendarClicked() {
-    this.toggle = !this.toggle;
   }
 
   toggleMode() {

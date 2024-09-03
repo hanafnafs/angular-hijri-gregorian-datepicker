@@ -5,6 +5,8 @@ import {
   Output,
   EventEmitter,
   HostBinding,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { stylesConfig } from '../interfaces/styles-config-model';
@@ -16,7 +18,7 @@ import { TodayDate, DayInfo } from '../interfaces/calendar-model';
   templateUrl: './hijri-gregorian-datepicker.component.html',
   styleUrls: ['./hijri-gregorian-datepicker.component.scss'],
 })
-export class HijriGregorianDatepickerComponent implements OnInit {
+export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   /// Inputs
   @Input() markToday: boolean = true;
   @Input() canChangeMode: boolean = true;
@@ -98,6 +100,12 @@ export class HijriGregorianDatepickerComponent implements OnInit {
     this.initializeForm();
     this.getTodaysDateInfo();
     this.initializeYearsAndMonths();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes['mode'].isFirstChange()) {
+      this.changeCalendarMode();
+    }
   }
 
   /// Initialize form control for month and year select
@@ -191,13 +199,11 @@ export class HijriGregorianDatepickerComponent implements OnInit {
       this.todaysDate.gregorian,
       this.mode
     );
-    console.log(days, 'days');
     this.weeks = this.generateWeeksArray(days);
   }
 
   /// Generate month weeks
   generateWeeksArray(daysArray) {
-    console.log('generateWeeksArray', daysArray);
     const firstDayName = daysArray[0]?.dN;
     const startIndex = this.weekdaysEn.indexOf(firstDayName);
     const weeks = [[]];
@@ -237,7 +243,6 @@ export class HijriGregorianDatepickerComponent implements OnInit {
       this.mode
     );
     this.weeks = this.generateWeeksArray(days);
-    console.log('this.mode', this.mode);
   }
 
   /// On day clicked handler
@@ -257,18 +262,34 @@ export class HijriGregorianDatepickerComponent implements OnInit {
   }
 
   /// Mark day as selected
-  markDaySelected(day: DayInfo) {
-    if (day.selected) {
-      day.selected = false;
-      this.selectedDay = undefined;
+  markDaySelected(dayInfo: DayInfo) {
+    if (dayInfo.selected) {
+      dayInfo.selected = false;
+      this.multipleSelectedDates = this.multipleSelectedDates.filter(
+        (day) => day !== dayInfo
+      );
+      if (!this.multiple) {
+        this.selectedDay = undefined;
+      }
     } else {
-      this.weeks.forEach((week: any) => {
-        week.forEach((day: DayInfo) => {
-          day.selected = false;
+      if (!this.multiple) {
+        this.weeks.forEach((week: any) => {
+          week.forEach((day: DayInfo) => {
+            day.selected = false;
+          });
         });
-      });
-      day.selected = true;
-      this.selectedDay = day;
+
+        dayInfo.selected = true;
+        this.selectedDay = dayInfo;
+        this.multipleSelectedDates = [dayInfo];
+        this.onDaySelect.emit(dayInfo);
+      } else {
+        dayInfo.selected = true;
+        this.onDaySelect.emit(dayInfo);
+        if (!this.multipleSelectedDates.includes(dayInfo)) {
+          this.multipleSelectedDates.push(dayInfo);
+        }
+      }
     }
   }
 

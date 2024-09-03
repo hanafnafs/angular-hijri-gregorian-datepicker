@@ -1,51 +1,29 @@
 <div class="calendar-container">
-  <div
-    class="toggle-section"
-    [dir]="dir"
-    *ngIf="canChangeMode"
-    (click)="changeCalendarMode()"
-    [ngStyle]="{ color: styles.primaryColor }"
-  >
+  <div class="toggle-section" [dir]="dir" *ngIf="canChangeMode" (click)="changeCalendarMode()"
+    [ngStyle]="{ color: styles.primaryColor }">
     <label class="switch">
-      <input
-        type="checkbox"
-        [disabled]="!canChangeMode"
-        justify="end"
-        [checked]="mode == 'ummAlQura'"
-        [ngStyle]="{ 'accent-color': styles.primaryColor }"
-      />
+      <input type="checkbox" [disabled]="!canChangeMode" justify="end" [checked]="mode == 'ummAlQura'"
+        [ngStyle]="{ 'accent-color': styles.primaryColor }" />
     </label>
     <span> {{ ummAlQuraDateText }} </span>
   </div>
 
-  <div
-    class="todays-date-section"
-    *ngIf="todaysDateSection"
-    [ngStyle]="{
+  <div class="todays-date-section" *ngIf="todaysDateSection" [ngStyle]="{
       'background-color': styles.backgroundColor,
       color: styles.primaryColor
-    }"
-  >
-    <div
-      class="text-info"
-      [ngClass]="{
+    }">
+    <div class="text-info" [ngClass]="{
         order: dir == 'rtl'
-      }"
-    >
+      }">
       <p>{{ todaysDateText }}</p>
     </div>
 
-    <div
-      class="data"
-      [dir]="dir"
-      [ngStyle]="{
+    <div class="data" [dir]="dir" [ngStyle]="{
         'background-color': styles.todaysDateBgColor,
         color: styles.todaysDateTextColor
-      }"
-    >
+      }">
       <p *ngIf="mode == 'ummAlQura'">
-        {{ todaysDate.ummAlQura.split("/")[2] }}
-
+        {{ todaysDate.ummAlQura.split("/")[0] }}
         {{
           locale == "ar"
             ? ummAlQuraMonths[
@@ -55,8 +33,7 @@
                 this.parseArabic(todaysDate.ummAlQura.split("/")[1]) - 1
               ]?.labelEn
         }}
-
-        {{ todaysDate.ummAlQura.split("/")[0] }}
+        {{ todaysDate.ummAlQura.split("/")[2] }}
       </p>
 
       <p *ngIf="mode == 'greg'">{{ todaysDate.gregorian }}</p>
@@ -65,54 +42,35 @@
 
   <div class="period-container">
     <form [formGroup]="periodForm" class="period-form">
-      <div
-        class="select-item"
-        [ngClass]="{
+      <div class="select-item" [ngClass]="{
           order: dir == 'ltr'
-        }"
-        [ngStyle]="{ 'background-color': styles.backgroundColor }"
-      >
+        }" [ngStyle]="{ 'background-color': styles.backgroundColor }">
         <label *ngIf="!periodForm.controls['year'].value">{{
           yearSelectLabel
         }}</label>
 
-        <select
-          formControlName="year"
-          class="{{ 'icon-' + dir }}"
-          placeholder="السنة"
-          (change)="onPeriodChange('year')"
-          [dir]="dir"
-          [ngStyle]="{
+        <select formControlName="year" class="{{ 'icon-' + dir }}" placeholder="السنة" (change)="onPeriodChange('year')"
+          [dir]="dir" [ngStyle]="{
             color: styles.primaryColor,
             'font-family': styles.fontFamily
-          }"
-        >
+          }">
           <option *ngFor="let year of years" [ngValue]="year">
             {{ locale == "ar" ? parseEnglish(year) : year }}
           </option>
         </select>
       </div>
 
-      <div
-        class="select-item"
-        [ngClass]="{
+      <div class="select-item" [ngClass]="{
           order: dir == 'rtl'
-        }"
-        [ngStyle]="{ 'background-color': styles.backgroundColor }"
-      >
+        }" [ngStyle]="{ 'background-color': styles.backgroundColor }">
         <label *ngIf="!periodForm.controls['month'].value">{{
           monthSelectLabel
         }}</label>
-        <select
-          class="{{ 'icon-' + dir }}"
-          formControlName="month"
-          (change)="onPeriodChange('month')"
-          [dir]="dir"
+        <select class="{{ 'icon-' + dir }}" formControlName="month" (change)="onPeriodChange('month')" [dir]="dir"
           [ngStyle]="{
             color: styles.primaryColor,
             'font-family': styles.fontFamily
-          }"
-        >
+          }">
           <option *ngFor="let month of months" [ngValue]="month.value">
             {{ locale == "ar" ? month?.labelAr : month?.labelEn }}
           </option>
@@ -121,38 +79,25 @@
     </form>
   </div>
 
-  <div
-    class="calendar-layout"
-    [ngStyle]="{ 'background-color': styles.backgroundColor }"
-  >
+  <div class="calendar-layout" [ngStyle]="{ 'background-color': styles.backgroundColor }">
     <div class="week-days">
-      <div
-        class="week-day"
-        [ngStyle]="{ color: styles.dayNameColor }"
-        *ngFor="let date of locale == 'ar' ? weekdaysAr : weekdaysEn"
-      >
+      <div class="week-day" [ngStyle]="{ color: styles.dayNameColor }"
+        *ngFor="let date of locale == 'ar' ? weekdaysAr : weekdaysEn">
         {{ date }}
       </div>
     </div>
 
     <div [dir]="dir">
       <div class="week" *ngFor="let week of weeks">
-        <div
-          class="day"
-          *ngFor="let day of week"
-          (click)="disableDayPicker == false ? onDayClicked(day) : ''"
+        <div class="day" *ngFor="let day of week" (click)="disableDayPicker == false ? onDayClicked(day) : ''"
           [ngStyle]="{
             'background-color': styles.backgroundColor,
             color: styles.primaryColor
-          }"
-        >
-          <div
-            id="greg-day"
-            [ngClass]="{
+          }">
+          <div id="greg-day" [ngClass]="{
               'todays-date': checkTodaysDate(day),
               'selected-date': day?.selected == true
-            }"
-            [ngStyle]="{
+            }" [ngStyle]="{
               border:
                 markToday && checkTodaysDate(day)
                   ? '1px solid ' + styles.secondaryColor
@@ -164,8 +109,7 @@
                 (checkFutureValidation(day) && futureValidation
                   ? styles.disabledDayColor
                   : '')
-            }"
-          >
+            }">
             <span *ngIf="mode == 'greg'">{{
               day?.gD?.split("/")[0] | number
             }}</span>
@@ -189,22 +133,15 @@
     </span>
   </div>
   <div>
-    <button
-      type="button"
-      class="confirm-btn"
-      [disabled]="
+    <button type="button" class="confirm-btn" [disabled]="
         isRequired &&
         ((!selectedDay && !multiple) ||
           (!multipleSelectedDates.length && multiple))
-      "
-      (click)="onConfirmClicked()"
-      *ngIf="showConfirmButton"
-      [ngStyle]="{
+      " (click)="onConfirmClicked()" *ngIf="showConfirmButton" [ngStyle]="{
         'background-color': styles.secondaryColor,
         color: styles.confirmBtnTextColor,
         'font-family': styles.fontFamily
-      }"
-    >
+      }">
       {{ submitTextButton }}
     </button>
   </div>

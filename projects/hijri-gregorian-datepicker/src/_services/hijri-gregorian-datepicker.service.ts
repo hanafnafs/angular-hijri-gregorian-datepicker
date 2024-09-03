@@ -16,12 +16,10 @@ export class HijriGregorianDatepickerService {
     if (!dateStr) {
       return null;
     }
-
     const parts = dateStr.split('/');
     if (parts.length !== 3) {
       return null;
     }
-
     const [day, month, year] = parts.map(Number);
     if (
       isNaN(day) ||
@@ -52,32 +50,27 @@ export class HijriGregorianDatepickerService {
   generateDates(fD: DayInfo, lD: DayInfo, uC: number): MonthDays {
     const startDate = this.parseDate(fD?.gD);
     const endDate = this.parseDate(lD?.gD);
-
     const daysInMonth: MonthDays = [];
     let currentGregorianDate = new Date(startDate);
     let currentUmmAlQuraDay = parseInt(fD?.uD?.split('/')[0]);
     let currentUmmAlQuraMonth = parseInt(fD?.uD?.split('/')[1]);
     let currentUmmAlQuraYear = parseInt(fD?.uD?.split('/')[2]);
     let daysInCurrentUmmAlQuraMonth = uC;
-
     while (currentGregorianDate <= endDate) {
       const ummAlQuraDate = `${currentUmmAlQuraDay
         .toString()
         .padStart(2, '0')}/${currentUmmAlQuraMonth
         .toString()
         .padStart(2, '0')}/${currentUmmAlQuraYear}`;
-
       daysInMonth.push({
         gD: this.formatDate(currentGregorianDate),
         uD: ummAlQuraDate,
         dN: this.getDayShortHand(currentGregorianDate),
         uC: 0, // Placeholder since we are not using it in the output
       });
-
       // Increment the Gregorian date by one day
       currentGregorianDate.setDate(currentGregorianDate.getDate() + 1);
       currentUmmAlQuraDay += 1;
-
       // Check if we need to increment the Umm al-Qura month and year
       if (currentUmmAlQuraDay > daysInCurrentUmmAlQuraMonth) {
         currentUmmAlQuraDay = 1;
@@ -93,21 +86,17 @@ export class HijriGregorianDatepickerService {
         daysInCurrentUmmAlQuraMonth = nextMonthData ? nextMonthData.fD.uC : 30; // Default to 30 if data is missing
       }
     }
-
     return daysInMonth;
   }
 
   generateDays(): { [year: string]: { [month: string]: MonthDays } } {
     const result: { [year: string]: { [month: string]: MonthDays } } = {};
-
     for (const year in this.calendarData) {
       result[year] = {};
-
       for (const month in this.calendarData[year]) {
         const fD = this.calendarData[year][month].fD;
         const lD = this.calendarData[year][month].lD;
         const uC = this.calendarData[year][month].fD?.uC;
-
         result[year][month] = this.generateDates(fD, lD, uC);
       }
     }
@@ -127,7 +116,6 @@ export class HijriGregorianDatepickerService {
             monthData.lD,
             monthData.fD.uC
           );
-
           const dayMatch = daysInMonth.find((d) => d.gD === formattedDate);
 
           if (dayMatch) {
@@ -141,7 +129,6 @@ export class HijriGregorianDatepickerService {
       if (isNaN(day) || isNaN(month) || isNaN(year)) {
         return null;
       }
-
       for (const yearKey in this.calendarData) {
         for (const monthKey in this.calendarData[yearKey]) {
           const monthData = this.calendarData[yearKey][monthKey];
@@ -150,7 +137,6 @@ export class HijriGregorianDatepickerService {
             monthData.lD,
             monthData.fD.uC
           );
-
           const dayMatch = daysInMonth.find((d) => {
             const [uDay, uMonth, uYear] = d.uD.split('/').map(Number);
             return uDay === day && uMonth === month && uYear === year;
@@ -176,7 +162,6 @@ export class HijriGregorianDatepickerService {
       // This is likely an Um Al-Qurra date
       isGregorian = false;
     }
-
     if (isGregorian) {
       return this.getGregorianMonthData(day, month, year);
     } else {
@@ -191,14 +176,10 @@ export class HijriGregorianDatepickerService {
   ): DayInfo[] | null {
     const yearData = this.calendarData[year];
     if (!yearData) return null;
-
     const monthData = yearData[month];
     if (!monthData) return null;
-
     const monthArray: DayInfo[] = [];
-
     const endDate = new Date(year, month, 0); // Last day of the Gregorian month
-
     for (let d = 1; d <= endDate.getDate(); d++) {
       const offset = d - 1;
 
@@ -319,11 +300,13 @@ export class HijriGregorianDatepickerService {
       .padStart(2, '0')}/${newYear}`;
   }
 
+  /// Return day names
   getDayName(dayIndex: number): string {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     return days[dayIndex];
   }
 
+  /// Check date is it in past or future
   checkPastOrFuture(inputDate) {
     if (inputDate) {
       const [day, month, year] = inputDate?.split('/').map(Number);

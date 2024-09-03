@@ -1,50 +1,42 @@
 <div class="app-container">
-  <!-- <button
-    type="button"
-    class="open-datepicker"
-    (click)="onOpenCalendarClicked()"
-  >
-    Toggle Calendar
-  </button> -->
   <div class="calendar-container">
     <hijri-gregorian-datepicker
-      [canChangeMode]="true"
+      [canChangeMode]="false"
       [todaysDateSection]="true"
       [futureValidation]="true"
       [disableYearPicker]="false"
       [disableMonthPicker]="false"
       [disableDayPicker]="false"
-      [multiple]="false"
+      [multiple]="true"
       [isRequired]="false"
       [showConfirmButton]="true"
       [markToday]="true"
       [mode]="mode"
-      [dir]="'rtl'"
-      [locale]="'ar'"
+      [dir]="'ltr'"
+      [locale]="'en'"
       [submitTextButton]="'Confirm'"
-      [todaysDateText]="'تاريخ اليوم'"
+      [todaysDateText]="'Today\'s Date'"
       [ummAlQuraDateText]="'التاريخ الهجرى'"
       [yearSelectLabel]="'Year'"
       [monthSelectLabel]="'Month'"
       [futureValidationMessageEn]="'Selected date cannot be in the future!'"
-      [futureValidationMessageAr]="'التاريخ المحدد لا يمكن ان يكون في المستقبل!'"
+      [futureValidationMessageAr]="
+        'التاريخ المحدد لا يمكن ان يكون في المستقبل!'
+      "
       [pastYearsLimit]="115"
       [futureYearsLimit]="5"
       [styles]="stylesConfig"
-      (onSubmit)="onSubmitTest($event)"
-      (onDaySelect)="onChangeTest($event)"
+      (onSubmit)="onSubmit($event)"
+      (onDaySelect)="onChange($event)"
       (onMonthChange)="onMonthChangeTest($event)"
       (onYearChange)="onYearChangeTest($event)"
     ></hijri-gregorian-datepicker>
   </div>
 
-  <button (click)="toggleMode()">toggle</button>
+  <button (click)="toggleMode()" id="toggle-btn">Toggle Mode</button>
   <div class="event-container">
     <p *ngIf="(selectedDate | json) != '{}'">
       {{ selectedDate | json }}
-    </p>
-    <p *ngIf="selectedDates.length">
-      {{ selectedDates | json }}
     </p>
   </div>
 </div>
