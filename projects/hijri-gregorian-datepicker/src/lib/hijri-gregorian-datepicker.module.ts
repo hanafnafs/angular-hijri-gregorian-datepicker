@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { HijriGregorianDatepickerComponent } from './hijri-gregorian-datepicker.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [HijriGregorianDatepickerComponent],
-  imports: [FormsModule, ReactiveFormsModule, BrowserModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   exports: [HijriGregorianDatepickerComponent],
 })
 export class HijriGregorianDatepickerModule {}

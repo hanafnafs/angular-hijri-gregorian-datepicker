@@ -6,17 +6,18 @@ import { Data, DayInfo, MonthDays } from '../interfaces/calendar-model';
   providedIn: 'root',
 })
 export class HijriGregorianDatepickerService {
-  private calendarData: Data;
+  public calendarData: Data;
 
   constructor() {
-    this.calendarData = datesDictionary;
+    this.calendarData = datesDictionary['default']; //only in publish
+    console.log(this.calendarData);
   }
 
   parseDate(dateStr: string): Date | null {
     if (!dateStr) {
       return null;
     }
-    const parts = dateStr.split('/');
+    const parts = dateStr?.split('/');
     if (parts.length !== 3) {
       return null;
     }
@@ -114,7 +115,7 @@ export class HijriGregorianDatepickerService {
           const daysInMonth = this.generateDates(
             monthData.fD,
             monthData.lD,
-            monthData.fD.uC
+            monthData.fD?.uC
           );
           const dayMatch = daysInMonth.find((d) => d.gD === formattedDate);
 
@@ -124,7 +125,7 @@ export class HijriGregorianDatepickerService {
         }
       }
     } else {
-      const [day, month, year] = dateStr.split('/').map(Number);
+      const [day, month, year] = dateStr?.split('/').map(Number);
 
       if (isNaN(day) || isNaN(month) || isNaN(year)) {
         return null;
@@ -135,10 +136,10 @@ export class HijriGregorianDatepickerService {
           const daysInMonth = this.generateDates(
             monthData.fD,
             monthData.lD,
-            monthData.fD.uC
+            monthData.fD?.uC
           );
           const dayMatch = daysInMonth.find((d) => {
-            const [uDay, uMonth, uYear] = d.uD.split('/').map(Number);
+            const [uDay, uMonth, uYear] = d?.uD?.split('/').map(Number);
             return uDay === day && uMonth === month && uYear === year;
           });
 
@@ -152,7 +153,7 @@ export class HijriGregorianDatepickerService {
     return null;
   }
   getMonthData(inputDate: string, type: string): DayInfo[] | null {
-    const [day, month, year] = inputDate.split('/').map(Number);
+    const [day, month, year] = inputDate?.split('/').map(Number);
     let isGregorian: boolean;
     // Determine if the input date is Gregorian or Um Al-Qurra
     if (type == 'greg') {
@@ -210,7 +211,7 @@ export class HijriGregorianDatepickerService {
 
       for (const monthIndex in yearData) {
         const monthData = yearData[parseInt(monthIndex)];
-        const [fDay, fMonth, fYear] = monthData.fD.uD.split('/').map(Number);
+        const [fDay, fMonth, fYear] = monthData?.fD?.uD?.split('/').map(Number);
 
         // Check if the input Um Al-Qurra year and month match
         if (fYear === year && fMonth === month) {
@@ -240,7 +241,7 @@ export class HijriGregorianDatepickerService {
             const gDate = this.calculateGregorianDate(startGregorianDate, i);
 
             // Determine the day name for the Gregorian date
-            const [gDay, gMonth, gYear] = gDate.split('/').map(Number);
+            const [gDay, gMonth, gYear] = gDate?.split('/').map(Number);
             const dayName = this.getDayName(
               new Date(gYear, gMonth - 1, gDay).getDay()
             );
@@ -262,7 +263,7 @@ export class HijriGregorianDatepickerService {
   }
 
   calculateGregorianDate(startGDate: string, offset: number): string {
-    const [day, month, year] = startGDate.split('/').map(Number);
+    const [day, month, year] = startGDate?.split('/').map(Number);
     const newDate = new Date(year, month - 1, day + offset);
 
     return `${newDate.getDate().toString().padStart(2, '0')}/${(
@@ -277,7 +278,7 @@ export class HijriGregorianDatepickerService {
     offset: number,
     uC: number
   ): string {
-    const [day, month, year] = startUDate.split('/').map(Number);
+    const [day, month, year] = startUDate?.split('/').map(Number);
 
     let newDay = day + offset;
     let newMonth = month;

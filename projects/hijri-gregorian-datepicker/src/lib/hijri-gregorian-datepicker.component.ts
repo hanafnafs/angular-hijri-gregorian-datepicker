@@ -121,8 +121,8 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
     if (this.mode == 'greg') {
       this.gregYear =
         this.futureYearsLimit == 0
-          ? Number(this.todaysDate.gregorian.split('/')[2])
-          : Number(this.todaysDate.gregorian.split('/')[2]) +
+          ? Number(this.todaysDate.gregorian?.split('/')[2])
+          : Number(this.todaysDate.gregorian?.split('/')[2]) +
             this.futureYearsLimit;
       for (let i = 0; i < this.gregYear; i++) {
         if (i < this.pastYearsLimit) {
@@ -136,8 +136,8 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
     } else {
       this.ummAlQuraYear =
         this.futureYearsLimit == 0
-          ? Number(this.todaysDate.ummAlQura.split('/')[2])
-          : Number(this.todaysDate.ummAlQura.split('/')[2]) +
+          ? Number(this.todaysDate.ummAlQura?.split('/')[2])
+          : Number(this.todaysDate.ummAlQura?.split('/')[2]) +
             this.futureYearsLimit;
       for (let i = 0; i < this.ummAlQuraYear; i++) {
         if (i < this.pastYearsLimit) {
@@ -153,8 +153,8 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
       if (
         year ==
         (this.mode == 'greg'
-          ? this.todaysDate.gregorian.split('/')[2]
-          : this.todaysDate.ummAlQura.split('/')[2])
+          ? this.todaysDate.gregorian?.split('/')[2]
+          : this.todaysDate.ummAlQura?.split('/')[2])
       ) {
         this.periodForm.controls['year'].setValue(year);
       }
@@ -163,8 +163,8 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
       if (
         month.value ==
         (this.mode == 'greg'
-          ? this.todaysDate.gregorian.split('/')[1]
-          : this.todaysDate.ummAlQura.split('/')[1])
+          ? this.todaysDate.gregorian?.split('/')[1]
+          : this.todaysDate.ummAlQura?.split('/')[1])
       ) {
         this.periodForm.controls['month'].setValue(month.value);
       }
@@ -194,7 +194,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
     this.todaysDate.ummAlQura = this._dateUtilsService.convertDate(
       this.todaysDate.gregorian,
       true
-    ).uD;
+    )?.uD;
     const days = this._dateUtilsService.getMonthData(
       this.todaysDate.gregorian,
       this.mode

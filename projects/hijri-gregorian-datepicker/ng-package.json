@@ -3,6 +3,5 @@
   "dest": "../../dist/hijri-gregorian-datepicker",
   "lib": {
     "entryFile": "src/public-api.ts"
-  },
-  "whitelistedNonPeerDependencies": ["moment-hijri"]
+  }
 }
