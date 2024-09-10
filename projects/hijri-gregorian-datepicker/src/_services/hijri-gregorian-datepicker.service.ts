@@ -9,8 +9,7 @@ export class HijriGregorianDatepickerService {
   public calendarData: Data;
 
   constructor() {
-    this.calendarData = datesDictionary['default']; //only in publish
-    console.log(this.calendarData);
+    this.calendarData = datesDictionary['default'];
   }
 
   parseDate(dateStr: string): Date | null {
@@ -88,21 +87,6 @@ export class HijriGregorianDatepickerService {
       }
     }
     return daysInMonth;
-  }
-
-  generateDays(): { [year: string]: { [month: string]: MonthDays } } {
-    const result: { [year: string]: { [month: string]: MonthDays } } = {};
-    for (const year in this.calendarData) {
-      result[year] = {};
-      for (const month in this.calendarData[year]) {
-        const fD = this.calendarData[year][month].fD;
-        const lD = this.calendarData[year][month].lD;
-        const uC = this.calendarData[year][month].fD?.uC;
-        result[year][month] = this.generateDates(fD, lD, uC);
-      }
-    }
-
-    return result;
   }
 
   convertDate(dateStr: string, isGregorian: boolean): DayInfo | null {
@@ -217,21 +201,17 @@ export class HijriGregorianDatepickerService {
         if (fYear === year && fMonth === month) {
           const totalDays = monthData.fD.uC; // Number of days in the Um Al-Qurra month
           const monthArray: DayInfo[] = [];
-
           // Calculate the difference in days between the first day of the JSON and "01/MM/YYYY"
           const umAlQurraStartDate = `01/${month
             .toString()
             .padStart(2, '0')}/${year}`;
-          const jsonUmAlQurraStartDate = monthData.fD.uD;
-          const dayDifference = fDay - 1; // The difference between the JSON start date and day 1
+          const dayDifference = fDay - 1;
 
-          // Use the Gregorian start date from JSON, adjusted by the day difference
           const startGregorianDate = this.calculateGregorianDate(
             monthData.fD.gD,
             -dayDifference
           );
 
-          // Iterate through all days in the Um Al-Qurra month starting from day 1
           for (let i = 0; i < totalDays; i++) {
             const uDate = this.calculateUmAlQurraDate(
               umAlQurraStartDate,

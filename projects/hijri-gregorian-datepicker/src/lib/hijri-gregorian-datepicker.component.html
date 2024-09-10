@@ -92,7 +92,7 @@
         <div class="day" *ngFor="let day of week" (click)="disableDayPicker == false ? onDayClicked(day) : ''"
           [ngStyle]="{
             'background-color': styles.backgroundColor,
-            color: styles.primaryColor
+            color: styles.dayColor
           }">
           <div id="greg-day" [ngClass]="{
               'todays-date': checkTodaysDate(day),
@@ -111,13 +111,15 @@
                   : '')
             }">
             <span *ngIf="mode == 'greg'">{{
-              day?.gD?.split("/")[0] | number
+             locale == 'ar' 
+             ? parseEnglish(day?.gD?.split("/")[0] | number) : 
+             day?.gD?.split("/")[0] | number
             }}</span>
 
             <span id="ummAlQura-day" *ngIf="mode == 'ummAlQura'">{{
-              locale == "en"
-                ? (day?.uD?.split("/")[0] | number)
-                : parseEnglish(day?.uD?.split("/")[0] | number)
+              locale == 'ar' 
+                ? parseEnglish(day?.uD?.split("/")[0] | number)
+                : day?.uD?.split("/")[0] | number
             }}</span>
           </div>
         </div>

@@ -15,9 +15,10 @@ export class AppComponent {
     primaryColor: '#272343',
     secondaryColor: '#272343',
     todaysDateBgColor: '#272343',
-    todaysDateTextColor: 'white',
-    confirmBtnTextColor: '#ffffff',
-    disabledDayColor: 'silver',
+    todaysDateTextColor: '#fff',
+    confirmBtnTextColor: '#fff',
+    disabledDayColor: '#C0C0C0',
+    dayColor: '#000',
     dayNameColor: '#0d7f91',
     fontFamily: 'Default-Regular',
   };

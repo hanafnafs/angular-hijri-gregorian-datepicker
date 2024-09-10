@@ -31,6 +31,7 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   @Input() isRequired: boolean = false;
   @Input() showConfirmButton: boolean = true;
   @Input() futureValidationMessage: boolean = false;
+  @Input() arabicLayout: boolean = false;
   @Input() mode: string = 'greg';
   @Input() dir: string = 'ltr';
   @Input() locale: string = 'en';
@@ -118,6 +119,8 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
 
   /// Initialize years and months for calendar
   initializeYearsAndMonths() {
+    this.years = [];
+    this.months = [];
     if (this.mode == 'greg') {
       this.gregYear =
         this.futureYearsLimit == 0
@@ -195,10 +198,16 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
       this.todaysDate.gregorian,
       true
     )?.uD;
-    const days = this._dateUtilsService.getMonthData(
-      this.todaysDate.gregorian,
-      this.mode
+    this.generatetMonthData(
+      this.mode == 'greg'
+        ? this.todaysDate.gregorian
+        : this.todaysDate.ummAlQura
     );
+  }
+
+  /// Generate month days from JSON
+  generatetMonthData(date: string) {
+    const days = this._dateUtilsService.getMonthData(date, this.mode);
     this.weeks = this.generateWeeksArray(days);
   }
 
@@ -235,14 +244,12 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   changeCalendarMode() {
     this.mode = this.mode == 'greg' ? 'ummAlQura' : 'greg';
     this.initializeYearsAndMonths();
-    const days = this._dateUtilsService.getMonthData(
+    this.generatetMonthData(
       '01/' +
         this.periodForm.controls['month'].value +
         '/' +
-        this.periodForm.controls['year'].value,
-      this.mode
+        this.periodForm.controls['year'].value
     );
-    this.weeks = this.generateWeeksArray(days);
   }
 
   /// On day clicked handler
@@ -320,17 +327,26 @@ export class HijriGregorianDatepickerComponent implements OnInit, OnChanges {
   }
 
   /// Convert english numbers to arabic equivalent
-  parseEnglish(date: string) {
-    if (date) {
-      const arabicNumbers =
-        '\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669';
-      return new String(date).replace(/[0123456789]/g, (d) => {
-        if (arabicNumbers[d] != null) {
-          return arabicNumbers[d];
-        }
-      });
-    }
+  parseEnglish(englishNum: any) {
+    if (!englishNum) return englishNum;
+    const numStr = String(englishNum);
+    const arabicNumbers = [
+      '\u0660',
+      '\u0661',
+      '\u0662',
+      '\u0663',
+      '\u0664',
+      '\u0665',
+      '\u0666',
+      '\u0667',
+      '\u0668',
+      '\u0669',
+    ];
+    return numStr.replace(/[0-9]/g, (digit) => {
+      return arabicNumbers[Number(digit)] || digit;
+    });
   }
+
   /// Convert arabic numbers to english equivalent
   parseArabic(arabicNum: any) {
     return arabicNum.replace(/[٠١٢٣٤٥٦٧٨٩]/g, function (d: string) {

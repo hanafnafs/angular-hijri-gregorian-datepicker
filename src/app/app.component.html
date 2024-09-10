@@ -1,14 +1,14 @@
 <div class="app-container">
   <div class="calendar-container">
     <hijri-gregorian-datepicker
-      [canChangeMode]="false"
+      [canChangeMode]="true"
       [todaysDateSection]="true"
       [futureValidation]="true"
       [disableYearPicker]="false"
       [disableMonthPicker]="false"
       [disableDayPicker]="false"
-      [multiple]="true"
-      [isRequired]="false"
+      [multiple]="false"
+      [isRequired]="true"
       [showConfirmButton]="true"
       [markToday]="true"
       [mode]="mode"
@@ -16,7 +16,7 @@
       [locale]="'en'"
       [submitTextButton]="'Confirm'"
       [todaysDateText]="'Today\'s Date'"
-      [ummAlQuraDateText]="'التاريخ الهجرى'"
+      [ummAlQuraDateText]="'Hijri Date'"
       [yearSelectLabel]="'Year'"
       [monthSelectLabel]="'Month'"
       [futureValidationMessageEn]="'Selected date cannot be in the future!'"

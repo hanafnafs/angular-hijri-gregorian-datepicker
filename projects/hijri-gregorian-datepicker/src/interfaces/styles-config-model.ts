@@ -7,5 +7,6 @@ export interface stylesConfig {
   confirmBtnTextColor?: string;
   disabledDayColor?: string;
   dayNameColor?: string;
+  dayColor?: string;
   fontFamily?: string;
 }
