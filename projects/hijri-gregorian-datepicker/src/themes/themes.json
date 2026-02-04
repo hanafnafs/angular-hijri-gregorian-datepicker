@@ -168,5 +168,22 @@
       "rangeEndColor": "#a21e1e",
       "rangeBetweenColor": "#ff4d4d"
     }
+  },
+  {
+    "name": "Dark Mode",
+    "stylesConfig": {
+      "backgroundColor": "#1a1a1a",
+      "primaryColor": "#ffffff",
+      "secondaryColor": "#007acc",
+      "todaysDateTextColor": "#ffffff",
+      "confirmBtnTextColor": "#ffffff",
+      "disabledDayColor": "#666666",
+      "dayNameColor": "#cccccc",
+      "borderRadius": "24px",
+      "sliderToggleBackground": "#333333",
+      "rangeStartColor": "#0066cc",
+      "rangeEndColor": "#0066cc",
+      "rangeBetweenColor": "#007acc"
+    }
   }
 ]
